@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace SyntaxParser.Core
@@ -33,6 +35,11 @@ namespace SyntaxParser.Core
 			return result;
 		}
 
+		public string ToJson(string path)
+		{
+			return JsonSerializer.Serialize(Parse(path));
+		}
+
 		public async IAsyncEnumerable<T> ParseAsync(string path)
 		{
 			var result = new List<T>();
@@ -43,6 +50,15 @@ namespace SyntaxParser.Core
 				if (string.IsNullOrWhiteSpace(input)) continue;
 				yield return _createInstance(_delimeters.Split(input));
 			}
+		}
+
+		public async Task<string> ToJsonAsync(string path)
+        {
+			using var stream = new MemoryStream();
+			await JsonSerializer.SerializeAsync(stream, ParseAsync(path));
+			using var reader = new StreamReader(stream);
+			stream.Position = 0;
+			return reader.ReadToEnd();
 		}
 
 		private static Func<string[], T> CreateInstance(string[] namesOrder)
@@ -69,5 +85,5 @@ namespace SyntaxParser.Core
 
 			return ((Func<string[], T>)expression.Compile());
 		}
-	}
+    }
 }

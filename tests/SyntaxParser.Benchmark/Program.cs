@@ -2,9 +2,4 @@
 using Benchmark;
 using BenchmarkDotNet.Running;
 
-Console.WriteLine("Hello, World!");
-
-/*var ben = new Benchmarks();
-ben.AllText();*/
-
 BenchmarkRunner.Run<Benchmarks>();

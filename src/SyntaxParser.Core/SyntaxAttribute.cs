@@ -1,4 +1,4 @@
-﻿namespace SyntaxParser.Core
+﻿namespace SyntaxParser
 {
     public class SyntaxAttribute : Attribute
 	{

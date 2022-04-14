@@ -1,4 +1,4 @@
-﻿using SyntaxParser.Core;
+﻿using SyntaxParser;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -10,7 +10,7 @@ namespace SyntaxParser.Benchmark
 		private Regex _delimeterMatch = new Regex(@"[^a-zA-Z0-9 ]*", RegexOptions.Compiled);
         private readonly Regex _delimeters;
         private readonly Dictionary<int, Action<T, string>> _fill;
-        private readonly Core.SyntaxParser<T> _coreParser;
+        private readonly SyntaxParser.SyntaxParser<T> _coreParser;
 
 		internal SyntaxParser()
 		{
@@ -18,14 +18,14 @@ namespace SyntaxParser.Benchmark
 			var syntax = ((SyntaxAttribute?)t.GetCustomAttributes().FirstOrDefault(a => a.GetType() == typeof(SyntaxAttribute)));
 			if (syntax?.Value == null) throw new InvalidOperationException();
 			_delimeters = new Regex(string.Join("|",
-				 Core.ConstantRegex.Symbols.Matches(syntax.Value).Where(m => !string.IsNullOrEmpty(m.Value))
+				 ConstantRegex.Symbols.Matches(syntax.Value).Where(m => !string.IsNullOrEmpty(m.Value))
 					.SelectMany(m => m.Captures.Select(c => c.Value)).ToArray()), RegexOptions.Compiled);
 			_fill = _delimeters.Split(syntax.Value).Select((val, index) => new { Index = index, Value = val })
 				.ToDictionary(i => i.Index, i =>
 				{
 					return SetPropertyValue(i.Value);
 				});
-			_coreParser = new SyntaxParser.Core.SyntaxParser<T>();
+			_coreParser = new SyntaxParser.SyntaxParser<T>();
 		}
 
 		internal IEnumerable<T> Parse(string text)

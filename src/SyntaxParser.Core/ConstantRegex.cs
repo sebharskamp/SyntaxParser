@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 
 [assembly:InternalsVisibleTo("SyntaxParser.Benchmark")]
-namespace SyntaxParser.Core
+namespace SyntaxParser
 {    
     internal class ConstantRegex
     {

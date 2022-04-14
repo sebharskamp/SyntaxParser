@@ -1,4 +1,4 @@
-﻿using SyntaxParser.Core;
+﻿using SyntaxParser;
 
 namespace SyntaxParser.Benchmark
 {

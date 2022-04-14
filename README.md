@@ -24,7 +24,7 @@ var exampleParser = new SyntaxParser<Example>();
 
 Parse file or text to instances.
 ```csharp
-var result = exampleParser.ParseText(Rome=>Paris);
+var result = exampleParser.ParseText("Rome=>Paris");
 
 // result will be an instance with the following values.
 // { 

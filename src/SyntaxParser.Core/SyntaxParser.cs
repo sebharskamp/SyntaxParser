@@ -19,7 +19,7 @@ namespace SyntaxParser
 			_delimeters = new Regex(string.Join("|",
 				ConstantRegex.Symbols.Matches(syntax.Value).Where(m => !string.IsNullOrEmpty(m.Value))
 					.SelectMany(m => m.Captures.Select(c => c.Value)).ToArray()), RegexOptions.Compiled);
-			_createInstance = CreateInstance(_delimeters.Split(syntax.Value));
+			_createInstance = BuildCreateInstanceFunction(_delimeters.Split(syntax.Value));
 		}
 
 		public IEnumerable<T> Parse(string path)
@@ -61,7 +61,7 @@ namespace SyntaxParser
 			return reader.ReadToEnd();
 		}
 
-		private static Func<string[], T> CreateInstance(string[] namesOrder)
+		private static Func<string[], T> BuildCreateInstanceFunction(string[] namesOrder)
 		{
 			var type = typeof(T);
 			var instance = Expression.New(typeof(T));

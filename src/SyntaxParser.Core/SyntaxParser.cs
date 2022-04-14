@@ -22,7 +22,23 @@ namespace SyntaxParser
 			_createInstance = BuildCreateInstanceFunction(_delimeters.Split(syntax.Value));
 		}
 
-		public IEnumerable<T> Parse(string path)
+		public IEnumerable<T> ParseText(string text)
+		{
+			string[] lines = text.Split(
+							new string[] { Environment.NewLine },
+							StringSplitOptions.None
+						);
+			var result = new T[lines.Length];
+			for (int i = 0; i < lines.Length; i++)
+			{
+				string line = lines[i];
+				if (string.IsNullOrWhiteSpace(line)) continue;
+				result[i] = _createInstance(_delimeters.Split(line));
+			}
+			return result;
+		}
+
+		public IEnumerable<T> ParseFile(string path)
 		{
 			var result = new List<T>();
 			using var sr = new StreamReader(path);
@@ -35,12 +51,12 @@ namespace SyntaxParser
 			return result;
 		}
 
-		public string ToJson(string path)
+        public string ParseFileToJson(string path)
 		{
-			return JsonSerializer.Serialize(Parse(path));
+			return JsonSerializer.Serialize(ParseFile(path));
 		}
 
-		public async IAsyncEnumerable<T> ParseAsync(string path)
+		public async IAsyncEnumerable<T> ParseFileAsync(string path)
 		{
 			var result = new List<T>();
 			using var sr = new StreamReader(path);
@@ -52,10 +68,10 @@ namespace SyntaxParser
 			}
 		}
 
-		public async Task<string> ToJsonAsync(string path)
+		public async Task<string> ParseFileToJsonAsync(string path)
         {
 			using var stream = new MemoryStream();
-			await JsonSerializer.SerializeAsync(stream, ParseAsync(path));
+			await JsonSerializer.SerializeAsync(stream, ParseFileAsync(path));
 			using var reader = new StreamReader(stream);
 			stream.Position = 0;
 			return reader.ReadToEnd();

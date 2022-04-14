@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SyntaxParser.Core\SyntaxParser.Core.csproj" />
+    <ProjectReference Include="..\SyntaxParser.Tests.Shared\SyntaxParser.Tests.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

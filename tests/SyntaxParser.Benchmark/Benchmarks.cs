@@ -1,12 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using SyntaxParser.Benchmark;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using SyntaxParser.Tests.Shared;
+using SyntaxParser.Tests.Shared.Extensions;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Benchmark
 {
@@ -15,14 +12,14 @@ namespace Benchmark
     public class Benchmarks
     {
         private SyntaxParser<MoveSyntax> _parser;
-        private SyntaxParser.Core.SyntaxParser<MoveSyntax> _coreParser;
+        private SyntaxParser.SyntaxParser<MoveSyntax> _coreParser;
         [Params(@"./instructions-small", @"./instructions-large")]
         public string FilePath { get; set; } = @"./instructions-large";
 
         public Benchmarks()
         {
             _parser = new SyntaxParser<MoveSyntax>();
-            _coreParser = new SyntaxParser.Core.SyntaxParser<MoveSyntax>();
+            _coreParser = new SyntaxParser.SyntaxParser<MoveSyntax>();
         }
 
         [Benchmark]
@@ -47,13 +44,13 @@ namespace Benchmark
         [Benchmark]
         public void ParseExpression()
         {
-            var result = _coreParser.Parse($"{FilePath}.txt");
+            var result = _coreParser.ParseFile($"{FilePath}.txt");
         }
 
         [Benchmark]
         public async Task ParseExpressionAsync()
         {
-            var result = await _coreParser.ParseAsync($"{FilePath}.txt").ToListAsync();
+            var result = await _coreParser.ParseFileAsync($"{FilePath}.txt").ToListAsync();
         }
 
         [Benchmark]
@@ -73,26 +70,13 @@ namespace Benchmark
         [Benchmark]
         public async Task ToJsonAync()
         {
-            var result = await _coreParser.ToJsonAsync($"{FilePath}.txt");
+            var result = await _coreParser.ParseFileToJsonAsync($"{FilePath}.txt");
         }
 
         [Benchmark]
         public void ToJson()
         {
-            var result = _coreParser.ToJson($"{FilePath}.txt");
-        }
-    }
-
-    public static class AsyncEnumerableExtensions
-    {
-        public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> items,
-            CancellationToken cancellationToken = default)
-        {
-            var results = new List<T>();
-            await foreach (var item in items.WithCancellation(cancellationToken)
-                                            .ConfigureAwait(false))
-                results.Add(item);
-            return results;
+            var result = _coreParser.ParseFileToJson($"{FilePath}.txt");
         }
     }
 }

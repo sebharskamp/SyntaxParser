@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using SyntaxParser.Benchmark;
+using SyntaxParser.Core.Extensions;
 using SyntaxParser.Tests.Shared;
 using SyntaxParser.Tests.Shared.Extensions;
 using System.Text.Json;

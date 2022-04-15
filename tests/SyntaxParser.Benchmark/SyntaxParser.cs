@@ -7,7 +7,6 @@ namespace SyntaxParser.Benchmark
 {
     internal class SyntaxParser<T>
 	{
-		private Regex _delimeterMatch = new Regex(@"[^a-zA-Z0-9 ]*", RegexOptions.Compiled);
         private readonly Regex _delimeters;
         private readonly Dictionary<int, Action<T, string>> _fill;
         private readonly SyntaxParser.SyntaxParser<T> _coreParser;
@@ -16,7 +15,7 @@ namespace SyntaxParser.Benchmark
 		{
 			var t = typeof(T);
 			var syntax = ((SyntaxAttribute?)t.GetCustomAttributes().FirstOrDefault(a => a.GetType() == typeof(SyntaxAttribute)));
-			if (syntax?.Value == null) throw new InvalidOperationException();
+			if (syntax?.Value is null) throw new InvalidOperationException();
 			_delimeters = new Regex(string.Join("|",
 				 ConstantRegex.Symbols.Matches(syntax.Value).Where(m => !string.IsNullOrEmpty(m.Value))
 					.SelectMany(m => m.Captures.Select(c => c.Value)).ToArray()), RegexOptions.Compiled);

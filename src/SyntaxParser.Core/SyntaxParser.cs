@@ -15,7 +15,7 @@ namespace SyntaxParser
 		{
 			var t = typeof(T);
 			var syntax = ((SyntaxAttribute?)t.GetCustomAttributes().FirstOrDefault(a => a.GetType() == typeof(SyntaxAttribute)));
-			if (syntax?.Value == null) throw new InvalidOperationException();
+			if (syntax?.Value is null) throw new InvalidOperationException();
 			_delimeters = new Regex(string.Join("|",
 				ConstantRegex.Symbols.Matches(syntax.Value).Where(m => !string.IsNullOrEmpty(m.Value))
 					.SelectMany(m => m.Captures.Select(c => c.Value)).ToArray()), RegexOptions.Compiled);
@@ -51,11 +51,6 @@ namespace SyntaxParser
 			return result;
 		}
 
-        public string ParseFileToJson(string path)
-		{
-			return JsonSerializer.Serialize(ParseFile(path));
-		}
-
 		public async IAsyncEnumerable<T> ParseFileAsync(string path)
 		{
 			var result = new List<T>();
@@ -66,15 +61,6 @@ namespace SyntaxParser
 				if (string.IsNullOrWhiteSpace(input)) continue;
 				yield return _createInstance(_delimeters.Split(input));
 			}
-		}
-
-		public async Task<string> ParseFileToJsonAsync(string path)
-        {
-			using var stream = new MemoryStream();
-			await JsonSerializer.SerializeAsync(stream, ParseFileAsync(path));
-			using var reader = new StreamReader(stream);
-			stream.Position = 0;
-			return reader.ReadToEnd();
 		}
 
 		private static Func<string[], T> BuildCreateInstanceFunction(string[] namesOrder)

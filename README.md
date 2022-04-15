@@ -32,6 +32,8 @@ var result = exampleParser.ParseText("Rome=>Paris");
 //    "To" : "Paris"
 // }
 ```
+## Test your syntax
+https://regex101.com/r/tCpfu5/1
 
 ## TODO
 - Assembly scanner to enable dependency injection.

@@ -1,6 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using SyntaxParser.Benchmark;
 using SyntaxParser.Core.Extensions;
 using SyntaxParser.Tests.Shared;
 using SyntaxParser.Tests.Shared.Extensions;
@@ -12,46 +11,26 @@ namespace Benchmark
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     public class Benchmarks
     {
-        private SyntaxParser<MoveSyntax> _parser;
-        private SyntaxParser.SyntaxParser<MoveSyntax> _coreParser;
         [Params(@"./instructions-small", @"./instructions-large")]
         public string FilePath { get; set; } = @"./instructions-large";
-
-        public Benchmarks()
-        {
-            _parser = new SyntaxParser<MoveSyntax>();
-            _coreParser = new SyntaxParser.SyntaxParser<MoveSyntax>();
-        }
 
         [Benchmark]
         public void AllText()
         {
             var text = File.ReadAllText($"{FilePath}.txt");
-            var result = _parser.Parse(text);
-        }
-
-        [Benchmark]
-        public void ParseLines()
-        {
-            var result = _parser.ParseLines($"{FilePath}.txt");
-        }
-
-        [Benchmark]
-        public void ParseFile()
-        {
-            var result = _parser.ParseFile($"{FilePath}.txt");
+            var result = SyntaxParser.SyntaxParser.ParseText<MoveSyntax>(text);
         }
 
         [Benchmark]
         public void ParseExpression()
         {
-            var result = _coreParser.ParseFile($"{FilePath}.txt");
+            var result = SyntaxParser.SyntaxParser.ParseFile<MoveSyntax>($"{FilePath}.txt");
         }
-
+  
         [Benchmark]
         public async Task ParseExpressionAsync()
         {
-            var result = await _coreParser.ParseFileAsync($"{FilePath}.txt").ToListAsync();
+            var result = await SyntaxParser.SyntaxParser.ParseFileAsync<MoveSyntax>($"{FilePath}.txt").ToListAsync();
         }
 
         [Benchmark]
@@ -68,16 +47,16 @@ namespace Benchmark
             var result = JsonSerializer.Deserialize<MoveSyntax[]>(text);
         }
 
-        [Benchmark]
+
         public async Task ToJsonAync()
         {
-            var result = await _coreParser.ParseFileToJsonAsync($"{FilePath}.txt");
+            var result = await SyntaxParser.SyntaxParser.ParseFileToJsonAsync<MoveSyntax>($"{FilePath}.txt");
         }
 
-        [Benchmark]
+
         public void ToJson()
         {
-            var result = _coreParser.ParseFileToJson($"{FilePath}.txt");
+            var result = SyntaxParser.SyntaxParser.ParseFileToJson<MoveSyntax>($"{FilePath}.txt");
         }
     }
 }

@@ -6,40 +6,39 @@ using FluentAssertions;
 using System;
 using System.Threading.Tasks;
 using SyntaxParser.Tests.Shared.Extensions;
+using System.Text;
 
 namespace SyntaxParser.Tests.Unit
 {
     public class SyntaxParserHappyFlowTests
-    {
-        private SyntaxParser<MoveSyntax> _sut = new SyntaxParser<MoveSyntax>();
-        
+    {        
         [Theory]
-        [ClassData(typeof(MoveSyntaxClassData))]
+        [ClassData(typeof(MoveSyntaxData))]
         public void ParseTextTest(string input, IEnumerable<MoveSyntax> expected)
         {
-            var result = _sut.ParseText(input);
+            var result = SyntaxParser.ParseText<MoveSyntax>(input);
             result.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
-        [ClassData(typeof(MoveSyntaxClassData))]
+        [ClassData(typeof(MoveSyntaxData))]
         public async Task ParseFileTest(string input, IEnumerable<MoveSyntax> expected)
         {
-            using var file = await MemoryFile.InitializeAsync(input);
-            var result = _sut.ParseFile(file.Path);
+            using var file = await TemporaryFile.InitializeAsync(input);
+            var result = SyntaxParser.ParseFile<MoveSyntax>(file.Path);
             result.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
-        [ClassData(typeof(MoveSyntaxClassData))]
+        [ClassData(typeof(MoveSyntaxData))]
         public async Task ParseFileAsyncTest(string input, IEnumerable<MoveSyntax> expected)
         {
-            using var file = await MemoryFile.InitializeAsync(input);
-            var result = await _sut.ParseFileAsync(file.Path).ToListAsync();
+            using var file = await TemporaryFile.InitializeAsync(input);
+            var result = await SyntaxParser.ParseFileAsync<MoveSyntax>(file.Path).ToListAsync();
             result.Should().BeEquivalentTo(expected);
         }
 
-        public class MoveSyntaxClassData : IEnumerable<object[]>
+        public class MoveSyntaxData : IEnumerable<object[]>
         {
             private List<object[]> _data = new List<object[]>
                 {
@@ -51,7 +50,7 @@ namespace SyntaxParser.Tests.Unit
                             }
                         }
                     },
-                    new object[] { $"A=>B{Environment.NewLine}C=>D",
+                    new object[] { new StringBuilder().AppendLine($"A=>B").Append("C=>D").ToString(),
                         new List<MoveSyntax>
                         {
                             new MoveSyntax

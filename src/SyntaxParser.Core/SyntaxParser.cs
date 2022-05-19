@@ -14,6 +14,7 @@ namespace SyntaxParser
 	{
 		private static readonly ConcurrentDictionary<Type, (Delegate del, string[] delimeters)> _parsers = new ConcurrentDictionary<Type, (Delegate, string[])>();
 		private static readonly int _sequenceAlgorithm = SequenceOptions.Naive;
+
 		/// <summary>
 		/// Parse a full text splitted into lines by Environement.Newline.
 		/// </summary>
@@ -83,7 +84,7 @@ namespace SyntaxParser
 				value = AddToHash(_parsers, key, type => CreateParser(type));
 			return input =>
             {
-                return ((Func<string[], T[]>)value.del)(input.ToStructuredArray(value.delimeters, _sequenceAlgorithm));
+                return ((Func<string[], T[]>)value.del)(input.ToStructuredArray<string>(value.delimeters, _sequenceAlgorithm));
             };
 		}
 
@@ -112,7 +113,7 @@ namespace SyntaxParser
 
 			var syntaxDelimiter = ConstantRegex.SyntaxDelimiter.Matches(syntax.Value).Select(m => m.Value).ToArray();
 
-            var activator = BuildCreateInstanceFunction(type, syntax.Value.ToStructuredArray(syntaxDelimiter, _sequenceAlgorithm)).Compile();
+            var activator = BuildCreateInstanceFunction(type, syntax.Value.ToStructuredArray<string>(syntaxDelimiter, _sequenceAlgorithm)).Compile();
 			return (activator, syntaxDelimiter);
 		}
 
@@ -131,8 +132,23 @@ namespace SyntaxParser
 
 			for (var i = 0; i < sliceLength; i++)
 			{
-				propertyAssignments[i] = Expression.Bind(type.GetProperty(syntax[i]), Expression.ArrayAccess(input, Expression.Add(shift, Expression.Constant(i))));
+                PropertyInfo? member = type.GetProperty(syntax[i]);
+				IndexExpression memberValueAsString = Expression.ArrayAccess(input, Expression.Add(shift, Expression.Constant(i)));
+				if (member.PropertyType == typeof(string))
+                {
+                    propertyAssignments[i] = Expression.Bind(member, memberValueAsString);
+				}
+				else if(member.PropertyType.IsArray)
+                {
+					propertyAssignments[i] = Expression.Bind(member, memberValueAsString);
+                }
+                else if(member.PropertyType.IsValueType)
+                {
+					var parse = Expression.Call(member.PropertyType, "Parse", null, memberValueAsString);
+					propertyAssignments[i] = Expression.Bind(member, parse);
+				}
 			}
+
 			var initialization = Expression.Lambda(Expression.MemberInit(Expression.New(type), propertyAssignments), new[] { input, shift });
 
 			var sliceSize = Expression.Variable(typeof(int), "sliceSize");
@@ -162,7 +178,6 @@ namespace SyntaxParser
 				results
 			);
 			return Expression.Lambda(body, new[] { input });
-		}
-			
+		}			
     }
 }

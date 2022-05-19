@@ -27,20 +27,20 @@ namespace Benchmark
             var result = SyntaxParser.SyntaxParser.ParseFile<MoveSyntax>($"{FilePath}.txt");
         }
   
-        [Benchmark]
+
         public async Task ParseExpressionAsync()
         {
             var result = await SyntaxParser.SyntaxParser.ParseFileAsync<MoveSyntax>($"{FilePath}.txt").ToListAsync();
         }
 
-        [Benchmark]
+
         public async Task JsonConverterAsync()
         {
             using var stream = new StreamReader($"{FilePath}.json");
             var result = await JsonSerializer.DeserializeAsync<MoveSyntax[]>(stream.BaseStream);
         }
 
-        [Benchmark]
+
         public void JsonConverter()
         {
             var text = File.ReadAllText($"{FilePath}.json");

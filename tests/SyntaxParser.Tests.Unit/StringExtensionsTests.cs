@@ -14,7 +14,7 @@ namespace SyntaxParser.Tests.Unit
         [ClassData(typeof(ToStructuredArrayNaiveData))]
         public void ToStructuredArray_WhenNaiveSequencer_Tests(string text, string[] delimeterSequence, string[] expected, int sequenceOption)
         {
-            var structeredArray = text.ToStructuredArray(delimeterSequence, sequenceOption);
+            var structeredArray = text.ToStructuredArray<string>(delimeterSequence, sequenceOption);
             Assert.Equal(expected, structeredArray);
         }
 
@@ -22,7 +22,7 @@ namespace SyntaxParser.Tests.Unit
         [ClassData(typeof(ToStructuredArrayExactData))]
         public void ToStructuredArray_WhenExactSequencer_Tests(string text, string[] delimeterSequence, string[] expected, int sequenceOption)
         {
-            var structeredArray = text.ToStructuredArray(delimeterSequence, sequenceOption);
+            var structeredArray = text.ToStructuredArray<string>(delimeterSequence, sequenceOption);
             Assert.Equal(expected, structeredArray);
         }
 

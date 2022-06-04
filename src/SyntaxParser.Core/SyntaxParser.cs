@@ -84,16 +84,8 @@ namespace SyntaxParser
 				value = AddToHash(_parsers, key, type => CreateParser(type));
 			return input =>
             {
-                return ((Func<string[], T[]>)value.del)(input.ToStructuredArray<string>(value.delimeters, _sequenceAlgorithm));
+                return ((Func<string[], T[]>)value.del)(input.ToStructuredArray<string>(value.delimeters, 0, 0, _sequenceAlgorithm));
             };
-		}
-
-		private static Func<string[], T[]> GetParser2<T>() where T : notnull
-		{
-			var key = typeof(T);
-			if (!_parsers.TryGetValue(key, out var value))
-				value = AddToHash(_parsers, key, type => CreateParser(type));
-			return (Func<string[], T[]>)value.del;
 		}
 
 		private static (Delegate del, string[] regex) AddToHash(ConcurrentDictionary<Type, (Delegate, string[])> hash, Type key, Func<Type, (Delegate, string[])> func)
@@ -113,7 +105,7 @@ namespace SyntaxParser
 
 			var syntaxDelimiter = ConstantRegex.SyntaxDelimiter.Matches(syntax.Value).Select(m => m.Value).ToArray();
 
-            var activator = BuildCreateInstanceFunction(type, syntax.Value.ToStructuredArray<string>(syntaxDelimiter, _sequenceAlgorithm)).Compile();
+            var activator = BuildCreateInstanceFunction(type, syntax.Value.ToStructuredArray<string>(syntaxDelimiter, 0, 0, _sequenceAlgorithm)).Compile();
 			return (activator, syntaxDelimiter);
 		}
 
@@ -140,7 +132,8 @@ namespace SyntaxParser
 				}
 				else if(member.PropertyType.IsArray)
                 {
-					propertyAssignments[i] = Expression.Bind(member, memberValueAsString);
+					var parse = Expression.Call(typeof(StringExtensions), nameof(StringExtensions.ToStructuredArray), new[] { member.PropertyType.GetElementType() }, new Expression[] { memberValueAsString, Expression.NewArrayInit(typeof(string), new[] {Expression.Constant(",")}), Expression.Constant(1), Expression.Constant(1), Expression.Constant(0)} );
+					propertyAssignments[i] = Expression.Bind(member, parse);
                 }
                 else if(member.PropertyType.IsValueType)
                 {

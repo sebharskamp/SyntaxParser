@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Globalization;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -9,6 +10,7 @@ namespace SyntaxParser
 	{
 		internal static T[] ToStructuredArray<T>(this string text, string[] delimterSequence, int start = 0, int end = 0, int sequenceOptions = SequenceOptions.Naive)
 		{
+			Type toType = typeof(T);
 			int d = 0;
 			ReadOnlySpan<char> input = text.AsSpan().Slice(start, text.Length - start - end);
 			ReadOnlySpan<char> delim = delimterSequence[d].AsSpan();
@@ -41,7 +43,7 @@ namespace SyntaxParser
 			{
 				if (x < inputMinusNewline && input.Slice(x, newLine.Length).SequenceEqual(newLine))
 				{
-					results[rCount] = valueParser<T>(input.Slice(x - segmentSize, segmentSize));
+					results[rCount] = valueParser(input.Slice(x - segmentSize, segmentSize), toType);
 					x++;
 					d = 0;
 					delim = delimterSequence[d].AsSpan();
@@ -51,7 +53,7 @@ namespace SyntaxParser
 				}
 				else if (x < input.Length - delim.Length && input.Slice(x, delim.Length).SequenceEqual(delim))
 				{
-					results[rCount] = valueParser<T>(input.Slice(x - segmentSize, segmentSize));
+					results[rCount] = valueParser(input.Slice(x - segmentSize, segmentSize), toType);
 					x += delim.Length - 1;
 					d++;
 					if (d < delimterSequence.Length)
@@ -67,13 +69,32 @@ namespace SyntaxParser
 					segmentSize++;
 				}
 			}
-			results[rCount] = valueParser<T>(input.Slice(input.Length - segmentSize));
+			results[rCount] = valueParser(input.Slice(input.Length - segmentSize), toType);
 			return results;
 		}
 
-		internal static T valueParser<T>(ReadOnlySpan<char> text)
+		internal static dynamic valueParser(ReadOnlySpan<char> text, Type toType)
         {
-			return (T)Convert.ChangeType(text.ToString(), typeof(T));
+			TypeCode typeCode = Type.GetTypeCode(toType);
+			return typeCode switch
+            {
+                TypeCode.Boolean => bool.Parse(text),
+                TypeCode.Char => text[0],
+                TypeCode.SByte => sbyte.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.Byte => byte.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.Int16 =>Int16.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.UInt16 =>UInt16.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.Int32 =>Int32.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.UInt32 =>UInt32.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.Int64 =>Int64.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.UInt64 =>UInt64.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.Single =>Single.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.Double =>double.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.Decimal =>decimal.Parse(text, provider: CultureInfo.InvariantCulture),
+                TypeCode.DateTime =>DateTime.ParseExact(text, "yyyyMMddTHH:mm:ssZ", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                TypeCode.String =>text.ToString(),
+                _ => throw new NotImplementedException()
+            };
         }
 
 

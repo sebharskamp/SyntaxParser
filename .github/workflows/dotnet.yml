@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration $BUILD_CONFIG
     - name: Test
-      run: dotnet test --no-build  --no-restore --verbosity normal
+      run: dotnet test
       
     - name: Pack with dotnet
       run: dotnet pack src\SyntaxParser.Core\SyntaxParser.Core.csproj --output nuget-packages --configuration Release

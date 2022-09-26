@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+  
+    env:
+      BUILD_CONFIG: 'Release'
+      SOLUTION: 'SyntaxParser.sln'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+
+    - name: Restore dependencies
+      run: nuget restore $SOLUTION
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore
+    - name: Test
+      run: dotnet test --no-build  --no-restore --verbosity normal
+      
+    - name: Pack with dotnet
+      run: dotnet pack src\SyntaxParser.Core\SyntaxParser.Core.csproj --output nuget-packages --configuration Release
+    - name: Push with dotnet
+      run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

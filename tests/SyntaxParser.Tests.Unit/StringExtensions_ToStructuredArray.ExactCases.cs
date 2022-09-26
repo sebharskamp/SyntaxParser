@@ -6,6 +6,7 @@ using SyntaxParser;
 using System.Collections.Generic;
 using System.Collections;
 using SyntaxParser.Tests.Shared;
+using SyntaxParser.Tests.Unit.UseCaseFramework;
 
 namespace SyntaxParser.Tests.Unit
 {

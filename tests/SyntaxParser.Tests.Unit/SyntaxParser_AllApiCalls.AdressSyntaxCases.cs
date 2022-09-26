@@ -1,4 +1,5 @@
 ﻿using SyntaxParser.Tests.Shared;
+using SyntaxParser.Tests.Unit.UseCaseFramework;
 using System.Collections.Generic;
 using static SyntaxParser.Tests.Unit.SyntaxParser_AllApiCalls;
 

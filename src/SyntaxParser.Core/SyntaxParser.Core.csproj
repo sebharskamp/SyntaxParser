@@ -1,31 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	<Version>1.0.1-alpha4</Version>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Description>For those whom want to parse business understandable, and easy to read commands in C# instance.</Description>
-    <PackageTags>convert; parse</PackageTags>
-    <PackageProjectUrl>https://github.com/sebharskamp/SyntaxParser</PackageProjectUrl>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <RepositoryUrl>https://github.com/sebharskamp/SyntaxParser</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>2022</Copyright>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Version>1.1</Version>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Description>For those whom want to parse business understandable, and easy to read commands in C# instance.</Description>
+		<PackageTags>convert; parse</PackageTags>
+		<PackageProjectUrl>https://github.com/sebharskamp/SyntaxParser</PackageProjectUrl>
+		<AssemblyVersion>1.0.1</AssemblyVersion>
+		<RepositoryUrl>https://github.com/sebharskamp/SyntaxParser</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Copyright>2022</Copyright>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AgileObjects.ReadableExpressions" Version="3.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AgileObjects.ReadableExpressions" Version="3.3.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SyntaxParser.Tests.Unit.UseCaseFramework;
+using System;
 using System.Collections.Generic;
 
 namespace SyntaxParser.Tests.Unit

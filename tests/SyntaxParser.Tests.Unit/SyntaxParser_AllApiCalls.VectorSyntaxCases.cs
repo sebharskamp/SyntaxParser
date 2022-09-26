@@ -1,13 +1,7 @@
 using SyntaxParser.Tests.Shared;
-using System.Collections;
 using System.Collections.Generic;
-using Xunit;
-using FluentAssertions;
-using System;
-using System.Threading.Tasks;
-using SyntaxParser.Tests.Shared.Extensions;
-using System.Text;
 using static SyntaxParser.Tests.Unit.SyntaxParser_AllApiCalls;
+using SyntaxParser.Tests.Unit.UseCaseFramework;
 
 namespace SyntaxParser.Tests.Unit
 {

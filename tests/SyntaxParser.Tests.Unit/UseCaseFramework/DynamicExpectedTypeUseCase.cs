@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Equivalency;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SyntaxParser.Tests.Unit.Extensions;
 using Xunit.Abstractions;
 
 namespace SyntaxParser.Tests.Unit.UseCaseFramework
@@ -35,6 +38,37 @@ namespace SyntaxParser.Tests.Unit.UseCaseFramework
             }
         }
 
+        public object? InvokeMethod(Type staticClassType, string methodName, object[] parameterValues)
+        {
+            var methodInfo = staticClassType.GetMethod(methodName, BindingFlags.Static | BindingFlags.Public);
+            var genericArguments = new Type[] { Expected.Type.GetElementType() ?? Expected.Type };
+            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
+            return genericMethodInfo?.Invoke(null, parameterValues);
+        }
+
+        public object? InvokeMethod<T>(T instance, string methodName, object[] parameterValues)
+        {
+            var methodInfo = typeof(T).GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public);
+            var genericArguments = new Type[] { Expected.Type.GetElementType() ?? Expected.Type };
+            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
+            return genericMethodInfo?.Invoke(instance, parameterValues);
+        }
+
+        public async Task<object?> InvokeMethodAsync(Type staticClassType, string methodName, object[] parameterValues)
+        {
+            var methodInfo = staticClassType.GetMethod(methodName, BindingFlags.Static | BindingFlags.Public);
+            var genericArguments = new Type[] { Expected.Type.GetElementType() ?? Expected.Type };
+            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
+            return await genericMethodInfo?.InvokeAsync(null, parameterValues);
+        }
+
+        public async Task<object?> InvokeMethodAsync<T>(T instance, string methodName, object[] parameterValues)
+        {
+            var methodInfo = typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.Public);
+            var genericArguments = new Type[] { Expected.Type.GetElementType() ?? Expected.Type };
+            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
+            return await genericMethodInfo?.InvokeAsync(instance, parameterValues);
+        }
 
 
         public void Deserialize(IXunitSerializationInfo info)

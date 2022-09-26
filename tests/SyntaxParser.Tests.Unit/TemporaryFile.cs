@@ -6,9 +6,8 @@ using Xunit;
 
 namespace SyntaxParser.Tests.Unit
 {
-    public class TemporaryFileTests
+    public class TemporaryFile_Tests
     {
-
         [Fact]
         public async Task CreateAndReopenFile()
         {
@@ -49,7 +48,7 @@ namespace SyntaxParser.Tests.Unit
 
     }
 
-        public class TemporaryFile: IDisposable
+    public class TemporaryFile : IDisposable
     {
         private string _path;
         private FileStream? _fileStream;

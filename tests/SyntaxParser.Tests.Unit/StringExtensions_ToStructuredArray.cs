@@ -9,6 +9,7 @@ using SyntaxParser.Tests.Shared;
 using Newtonsoft.Json;
 using Xunit.Abstractions;
 using FluentAssertions.Equivalency;
+using SyntaxParser.Tests.Unit.UseCaseFramework;
 
 namespace SyntaxParser.Tests.Unit
 {

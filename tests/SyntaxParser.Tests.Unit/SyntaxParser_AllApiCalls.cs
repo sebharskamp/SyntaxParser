@@ -8,6 +8,8 @@ using System.Text.Json;
 using SyntaxParser.Core.Extensions;
 using System.IO;
 using SyntaxParser.Tests.Unit.UseCaseFramework;
+using SyntaxParser.Tests.Unit.Extensions;
+using System;
 
 namespace SyntaxParser.Tests.Unit
 {
@@ -20,10 +22,7 @@ namespace SyntaxParser.Tests.Unit
         [ClassData(typeof(AdressSyntaxCases))]
         public void ParseText(SyntaxParserCase @case)
         {
-            var methodInfo = typeof(SyntaxParser).GetMethod(nameof(SyntaxParser.ParseText), System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-            var genericArguments = new[] { @case.Expected.Type.GetElementType() };
-            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            var result = genericMethodInfo?.Invoke(null, new object[] { @case.Input });
+            var result = @case.InvokeMethod(typeof(SyntaxParser), nameof(SyntaxParser.ParseText), new object[] { @case.Input });
             @case.IsResultAsExpected(result);
         }
 
@@ -34,10 +33,7 @@ namespace SyntaxParser.Tests.Unit
         public async Task ParseFile(SyntaxParserCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input);
-            var methodInfo = typeof(SyntaxParser).GetMethod(nameof(SyntaxParser.ParseFile), System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-            var genericArguments = new[] { @case.Expected.Type.GetElementType() };
-            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            var result = genericMethodInfo?.Invoke(null, new object[] { file.Path });
+            var result = @case.InvokeMethod(typeof(SyntaxParser), nameof(SyntaxParser.ParseFile), new object[] { file.Path });
             @case.IsResultAsExpected(result);
         }
 
@@ -87,10 +83,7 @@ namespace SyntaxParser.Tests.Unit
         public async Task ParseFileToJson(SyntaxParserCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input);
-            var methodInfo = typeof(SyntaxParser).GetMethod(nameof(SyntaxParser.ParseFileToJson), System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-            var genericArguments = new[] { @case.Expected.Type.GetElementType() };
-            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            var result = genericMethodInfo?.Invoke(null, new object[] { file.Path });
+            var result = @case.InvokeMethod(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJson), new object[] { file.Path });
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
         }
 
@@ -101,10 +94,7 @@ namespace SyntaxParser.Tests.Unit
         public async Task ParseFileToJsonAsync(SyntaxParserCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input);
-            var methodInfo = typeof(SyntaxParser).GetMethod(nameof(SyntaxParser.ParseFileToJsonAsync), System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-            var genericArguments = new[] { @case.Expected.Type.GetElementType() };
-            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            var result = await genericMethodInfo?.InvokeAsync(null, new object[] { file.Path });
+            var result = await @case.InvokeMethodAsync(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJsonAsync), new object[] { file.Path });
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
         }
 

@@ -1,6 +1,7 @@
 ﻿using SyntaxParser.Tests.Shared;
 using System.Collections.Generic;
 using System;
+using SyntaxParser.Tests.Unit.UseCaseFramework;
 
 namespace SyntaxParser.Tests.Unit
 {

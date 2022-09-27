@@ -30,6 +30,16 @@ namespace SyntaxParser.Tests.Unit
         [ClassData(typeof(MoveSyntaxCases))]
         [ClassData(typeof(VectorSyntaxCases))]
         [ClassData(typeof(AdressSyntaxCases))]
+        public void ParseTextToJson(SyntaxParserCase @case)
+        {
+            var result = @case.InvokeMethod(typeof(SyntaxParser), nameof(SyntaxParser.ParseTextToJson), new object[] { @case.Input });
+            @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
+        }
+
+        [Theory]
+        [ClassData(typeof(MoveSyntaxCases))]
+        [ClassData(typeof(VectorSyntaxCases))]
+        [ClassData(typeof(AdressSyntaxCases))]
         public async Task ParseFile(SyntaxParserCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input);

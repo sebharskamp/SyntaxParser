@@ -17,14 +17,21 @@ public class Example
 }
 ```
 
-Initiate a new instance of SyntaxParser.
-```csharp
-var exampleParser = new SyntaxParser<Example>();
-```
-
 Parse file or text to instances.
 ```csharp
-var result = exampleParser.ParseText("Rome=>Paris");
+var result = SyntaxParser.ParseText<Example>("Rome=>Paris");
+
+// result will be an instance with the following values.
+// { 
+//    "From" : "Rome",
+//    "To" : "Paris"
+// }
+```
+
+
+Parse file or text to json.
+```csharp
+var result = SyntaxParser.ParseTextToJson<Example>("Rome=>Paris");
 
 // result will be an instance with the following values.
 // { 
@@ -36,6 +43,4 @@ var result = exampleParser.ParseText("Rome=>Paris");
 https://regex101.com/r/tCpfu5/1
 
 ## TODO
-- Assembly scanner to enable dependency injection.
-- Array Support
 - Nested Support

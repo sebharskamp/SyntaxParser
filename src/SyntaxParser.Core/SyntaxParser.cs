@@ -1,9 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace SyntaxParser
 {
@@ -12,17 +10,27 @@ namespace SyntaxParser
     /// </summary>
     public static class SyntaxParser
     {
-        private static readonly ConcurrentDictionary<Type, (Delegate del, string[] delimeters)> _parsers = new ConcurrentDictionary<Type, (Delegate, string[])>();
+        private static readonly ConcurrentDictionary<Type, (Delegate del, string[] delimeters)> _parsers = new();
         private static readonly int _sequenceAlgorithm = SequenceAlgorithm.Naive;
 
         /// <summary>
-        /// Parse a full text splitted into lines by Environement.Newline.
+        /// Parse a full text, splitted into lines by Environement.Newline.
         /// </summary>
         /// <param name="text">The full text.</param>
         /// <returns>Parsed instances of T.</returns>
-        public static IEnumerable<T> ParseText<T>(string text)
+        public static IEnumerable<T> ParseText<T>(string text) where T : notnull
         {
             return GetParser<T>()(text);
+        }
+
+        /// <summary>
+        /// Parse text, splitted into lines by Environement.Newline, to serialized JSON object(s).
+        /// </summary>
+        /// <param name="text">The full text.</param>
+        /// <returns>serialized JSON object.</returns>
+        public static string ParseTextToJson<T>(string text) where T : notnull
+        {
+            return JsonSerializer.Serialize(SyntaxParser.ParseText<T>(text));
         }
 
         /// <summary>
@@ -30,7 +38,7 @@ namespace SyntaxParser
         /// </summary>
         /// <param name="path">Path to the file.</param>
         /// <returns>Parsed instances.</returns>
-        public static IEnumerable<T> ParseFile<T>(string path)
+        public static IEnumerable<T> ParseFile<T>(string path) where T : notnull
         {
             using var sr = new StreamReader(path);
             return GetParser<T>()(sr.ReadToEnd());
@@ -41,7 +49,7 @@ namespace SyntaxParser
         /// </summary>
         /// <param name="path">Path to the file.</param>
         /// <returns>Parsed instances.</returns>
-        public static async IAsyncEnumerable<T> ParseFileAsync<T>(string path)
+        public static async IAsyncEnumerable<T> ParseFileAsync<T>(string path) where T : notnull
         {
             using var sr = new StreamReader(path); ;
             while (sr.Peek() >= 0)
@@ -54,21 +62,21 @@ namespace SyntaxParser
         }
 
         /// <summary>
-        /// Parse content of a file line by line to serialized JSON object.
+        /// Parse content of a file line by line to serialized JSON object(s).
         /// </summary>
         /// <param name="path">Path to the file.</param>
         /// <returns>serialized JSON object.</returns>
-        public static string ParseFileToJson<T>(string path)
+        public static string ParseFileToJson<T>(string path) where T : notnull
         {
             return JsonSerializer.Serialize(SyntaxParser.ParseFile<T>(path));
         }
 
         /// <summary>
-        /// Parse content of a file line by line to serialized JSON object.
+        /// Parse content of a file line by line to serialized JSON object(s).
         /// </summary>
         /// <param name="path">Path to the file.</param>
         /// <returns>serialized JSON object.</returns>
-        public async static Task<string> ParseFileToJsonAsync<T>(string path)
+        public async static Task<string> ParseFileToJsonAsync<T>(string path) where T : notnull
         {
             using var stream = new MemoryStream();
             await JsonSerializer.SerializeAsync(stream, SyntaxParser.ParseFileAsync<T>(path));
@@ -124,7 +132,8 @@ namespace SyntaxParser
 
             for (var i = 0; i < sliceLength; i++)
             {
-                PropertyInfo? member = type.GetProperty(syntax[i]);
+                var member = type.GetProperty(syntax[i]);
+                if (member is null) throw new InvalidOperationException($"Member {syntax[i]} not found on {type.FullName}");
                 IndexExpression memberValueAsString = Expression.ArrayAccess(input, Expression.Add(shift, Expression.Constant(i)));
                 if (member.PropertyType == typeof(string))
                 {
@@ -132,7 +141,9 @@ namespace SyntaxParser
                 }
                 else if (member.PropertyType.IsArray)
                 {
-                    var parse = Expression.Call(typeof(StringExtensions), nameof(StringExtensions.ToStructuredArray), new[] { member.PropertyType.GetElementType() }, new Expression[] { memberValueAsString, Expression.NewArrayInit(typeof(string), new[] { Expression.Constant(",") }), Expression.Constant(1), Expression.Constant(1), Expression.Constant(0) });
+                    var arrayElementType = member.PropertyType.GetElementType();
+                    if (arrayElementType is null) throw new InvalidOperationException($"elementType of array for member {member.Name} not defined. Member is on {type.FullName}");
+                    var parse = Expression.Call(typeof(StringExtensions), nameof(StringExtensions.ToStructuredArray), new[] { arrayElementType }, new Expression[] { memberValueAsString, Expression.NewArrayInit(typeof(string), new[] { Expression.Constant(",") }), Expression.Constant(1), Expression.Constant(1), Expression.Constant(0) });
                     propertyAssignments[i] = Expression.Bind(member, parse);
                 }
                 else if (member.PropertyType.IsValueType)

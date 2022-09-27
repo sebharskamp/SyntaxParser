@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<IsPackable>True</IsPackable>
 		<Description>For those whom want to parse business understandable, and easy to read commands in C# instance.</Description>
 		<PackageTags>convert; parse</PackageTags>
 		<PackageProjectUrl>https://github.com/sebharskamp/SyntaxParser</PackageProjectUrl>

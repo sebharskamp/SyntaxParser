@@ -7,12 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyntaxParser.Core", "src\Sy
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D3A929C-EE0D-4B90-9EAE-4816036512E5}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyntaxParser.Tests.Unit", "tests\SyntaxParser.Tests.Unit\SyntaxParser.Tests.Unit.csproj", "{986E328C-360A-450E-B3E4-C9F5676DD50A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyntaxParser.Tests.Shared", "tests\SyntaxParser.Tests.Shared\SyntaxParser.Tests.Shared.csproj", "{F77F5946-CFDC-4422-86A6-8C0CE2304356}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SyntaxParser.Benchmark", "tests\SyntaxParser.Benchmark\SyntaxParser.Benchmark.csproj", "{DE327726-CC3C-4017-975A-34BACDD90DA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,10 @@ Global
 		{F77F5946-CFDC-4422-86A6-8C0CE2304356}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F77F5946-CFDC-4422-86A6-8C0CE2304356}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F77F5946-CFDC-4422-86A6-8C0CE2304356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE327726-CC3C-4017-975A-34BACDD90DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE327726-CC3C-4017-975A-34BACDD90DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE327726-CC3C-4017-975A-34BACDD90DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE327726-CC3C-4017-975A-34BACDD90DA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

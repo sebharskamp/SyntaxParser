@@ -1,0 +1,43 @@
+name: Benchmarks
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    
+permissions:
+  # deployments permission to deploy GitHub pages website
+  deployments: write
+  # contents permission to update benchmark contents in gh-pages branch
+  contents: write
+
+jobs:
+  benchmark:
+    name: Performance regression check
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -configuration Release
+    - name: Run Benchmarks
+      run: dotnet run --project .\tests\SyntaxParser.Benchmark\SyntaxParser.Benchmark.csproj --verbosity normal --no-build
+    - name: Continuous Benchmark
+      # You may pin to the exact commit or the version.
+      # uses: benchmark-action/github-action-benchmark@3b3014adac5e456db8ad428ccc01bec75242487f
+      uses: benchmark-action/github-action-benchmark@v1.14.0
+      with:
+          name: SyntaxParser Benchmark 
+          tool: 'benchmarkdotnet'
+          output-file-path: BenchmarkDotNet.Artifacts/results/Benchmark.Benchmarks-report-full-compressed.json
+          # Access token to deploy GitHub Pages branch
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Push and deploy GitHub pages branch automatically
+          auto-push: true

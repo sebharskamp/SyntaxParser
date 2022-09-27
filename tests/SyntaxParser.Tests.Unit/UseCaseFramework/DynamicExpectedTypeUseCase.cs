@@ -27,7 +27,9 @@ namespace SyntaxParser.Tests.Unit.UseCaseFramework
                 new Type[] { }, null);
             var genericArguments = new[] { Expected.Type };
             var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            var expectedValue = genericMethodInfo?.Invoke(Expected.Value, new object[] { });
+            object value = Expected.Value;
+            if (value is null) throw new ArgumentNullException("Expected value not set");
+            var expectedValue = genericMethodInfo?.Invoke((Newtonsoft.Json.Linq.JToken)value, new object[] { });
             if (options == null)
             {
                 producedResult.Should().BeEquivalentTo(parse(expectedValue));

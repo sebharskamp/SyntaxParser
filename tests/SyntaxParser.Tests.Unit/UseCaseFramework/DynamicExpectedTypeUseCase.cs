@@ -23,13 +23,16 @@ namespace SyntaxParser.Tests.Unit.UseCaseFramework
 
         public void IsResultAsExpected(object producedResult, Func<object, object?> parse, Func<EquivalencyAssertionOptions<object>, EquivalencyAssertionOptions<object>>? options = null)
         {
-            var methodInfo = typeof(JToken).GetMethod(nameof(JToken.ToObject), 1, BindingFlags.Instance | BindingFlags.Public, null,
-                new Type[] { }, null);
-            var genericArguments = new[] { Expected.Type };
-            var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
-            object value = Expected.Value;
-            if (value is null) throw new ArgumentNullException("Expected value not set");
-            var expectedValue = genericMethodInfo?.Invoke((Newtonsoft.Json.Linq.JToken)value, new object[] { });
+            object expectedValue = Expected.Value;
+            if (Expected.Value is (Newtonsoft.Json.Linq.JToken))
+            {
+                var methodInfo = typeof(JToken).GetMethod(nameof(JToken.ToObject), 1, BindingFlags.Instance | BindingFlags.Public, null,
+                    new Type[] { }, null);
+                var genericArguments = new[] { Expected.Type };
+                var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
+                expectedValue = genericMethodInfo?.Invoke(expectedValue, new object[] { });
+            }
+
             if (options == null)
             {
                 producedResult.Should().BeEquivalentTo(parse(expectedValue));

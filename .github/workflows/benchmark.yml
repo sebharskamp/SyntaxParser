@@ -26,9 +26,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -configuration Release
+      run: dotnet build --configuration Release
     - name: Run Benchmarks
-      run: dotnet run --project .\tests\SyntaxParser.Benchmark\SyntaxParser.Benchmark.csproj --verbosity normal --no-build
+      run: dotnet run --project ./tests/SyntaxParser.Benchmark/SyntaxParser.Benchmark.csproj --verbosity normal --no-build --configuration Release
     - name: Continuous Benchmark
       # You may pin to the exact commit or the version.
       # uses: benchmark-action/github-action-benchmark@3b3014adac5e456db8ad428ccc01bec75242487f
@@ -36,8 +36,8 @@ jobs:
       with:
           name: SyntaxParser Benchmark 
           tool: 'benchmarkdotnet'
-          output-file-path: BenchmarkDotNet.Artifacts/results/Benchmark.Benchmarks-report-full-compressed.json
+          output-file-path: ./tests/SyntaxParser.Benchmark/bin/Release/net6.0/BenchmarkDotNet.Artifacts/results/Benchmark.Benchmarks-report-full-compressed.json
           # Access token to deploy GitHub Pages branch
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PAGES_TOKEN }}
           # Push and deploy GitHub pages branch automatically
           auto-push: true

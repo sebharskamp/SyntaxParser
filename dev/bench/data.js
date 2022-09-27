@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1664285092317,
+  "lastUpdate": 1664286298211,
   "repoUrl": "https://github.com/sebharskamp/SyntaxParser",
   "entries": {
     "SyntaxParser Benchmark": [
@@ -72,6 +72,42 @@ window.BENCHMARK_DATA = {
             "value": 209359.67320033483,
             "unit": "ns",
             "range": "± 1296.1252595851806"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "committer": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "distinct": true,
+          "id": "a68e504337be14a0a8bd5f5efdbbcaa92b89324d",
+          "message": "Readme corrections",
+          "timestamp": "2022-09-27T15:40:36+02:00",
+          "tree_id": "391e15c7e4b4f5a3c00d17abbdeaa3cacfa179e3",
+          "url": "https://github.com/sebharskamp/SyntaxParser/commit/a68e504337be14a0a8bd5f5efdbbcaa92b89324d"
+        },
+        "date": 1664286291172,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-small\")",
+            "value": 678.1873158046177,
+            "unit": "ns",
+            "range": "± 1.4048108352985598"
+          },
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-large\")",
+            "value": 204710.3173828125,
+            "unit": "ns",
+            "range": "± 639.7738383964963"
           }
         ]
       }

@@ -36,7 +36,7 @@ jobs:
       with:
           name: SyntaxParser Benchmark 
           tool: 'benchmarkdotnet'
-          output-file-path: ./tests/SyntaxParser.Benchmark/bin/Release/net6.0/BenchmarkDotNet.Artifacts/results/Benchmark.Benchmarks-report-full-compressed.json
+          output-file-path: BenchmarkDotNet.Artifacts/results/Benchmark.Benchmarks-report-full-compressed.json
           # Access token to deploy GitHub Pages branch
           github-token: ${{ secrets.PAGES_TOKEN }}
           # Push and deploy GitHub pages branch automatically

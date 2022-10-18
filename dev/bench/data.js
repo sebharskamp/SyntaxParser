@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1666101995390,
+  "lastUpdate": 1666102443362,
   "repoUrl": "https://github.com/sebharskamp/SyntaxParser",
   "entries": {
     "SyntaxParser Benchmark": [
@@ -180,6 +180,42 @@ window.BENCHMARK_DATA = {
             "value": 205455.8837890625,
             "unit": "ns",
             "range": "± 596.7508637754611"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c883210e52c7d5503a542fff3e7c57d140800bbc",
+          "message": "Create deploysyntaxparser.yml",
+          "timestamp": "2022-10-18T16:09:22+02:00",
+          "tree_id": "b79cc95d57b98cf3f2dcfa2a579affb00cfd1cde",
+          "url": "https://github.com/sebharskamp/SyntaxParser/commit/c883210e52c7d5503a542fff3e7c57d140800bbc"
+        },
+        "date": 1666102434639,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-small\")",
+            "value": 999.3457657950265,
+            "unit": "ns",
+            "range": "± 12.821468547559489"
+          },
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-large\")",
+            "value": 311500.6640625,
+            "unit": "ns",
+            "range": "± 4723.980652450843"
           }
         ]
       }

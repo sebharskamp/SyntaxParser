@@ -80,3 +80,4 @@ For all methods two tests are run. One small with 4 instructions and one Large w
 
 ## TODO
 - Nested Support
+- CSV Support

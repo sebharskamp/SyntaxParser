@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1666102443362,
+  "lastUpdate": 1666102833427,
   "repoUrl": "https://github.com/sebharskamp/SyntaxParser",
   "entries": {
     "SyntaxParser Benchmark": [
@@ -216,6 +216,42 @@ window.BENCHMARK_DATA = {
             "value": 311500.6640625,
             "unit": "ns",
             "range": "± 4723.980652450843"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4478898ed96840db407695e2345920499144fbca",
+          "message": "Create LICENSE.txt",
+          "timestamp": "2022-10-18T16:16:41+02:00",
+          "tree_id": "53bafbda4b974478353d20b8a8c619bda353f307",
+          "url": "https://github.com/sebharskamp/SyntaxParser/commit/4478898ed96840db407695e2345920499144fbca"
+        },
+        "date": 1666102825933,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-small\")",
+            "value": 836.5427780151367,
+            "unit": "ns",
+            "range": "± 6.373852923289837"
+          },
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-large\")",
+            "value": 251573.6328125,
+            "unit": "ns",
+            "range": "± 1284.8837672523441"
           }
         ]
       }

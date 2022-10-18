@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1666101517083,
+  "lastUpdate": 1666101995390,
   "repoUrl": "https://github.com/sebharskamp/SyntaxParser",
   "entries": {
     "SyntaxParser Benchmark": [
@@ -144,6 +144,42 @@ window.BENCHMARK_DATA = {
             "value": 249859.3036358173,
             "unit": "ns",
             "range": "± 516.555466253208"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "committer": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "distinct": true,
+          "id": "3112c4716e74425860b573fd77476cc02e3b8c93",
+          "message": "Add todo at readme file",
+          "timestamp": "2022-10-18T16:02:55+02:00",
+          "tree_id": "9a3857ba6b7c1c5bfe39da71a1098aaa6388d80a",
+          "url": "https://github.com/sebharskamp/SyntaxParser/commit/3112c4716e74425860b573fd77476cc02e3b8c93"
+        },
+        "date": 1666101988302,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-small\")",
+            "value": 701.2181418282645,
+            "unit": "ns",
+            "range": "± 3.6114445932063552"
+          },
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-large\")",
+            "value": 205455.8837890625,
+            "unit": "ns",
+            "range": "± 596.7508637754611"
           }
         ]
       }

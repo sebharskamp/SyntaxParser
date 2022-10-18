@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1664286298211,
+  "lastUpdate": 1666101517083,
   "repoUrl": "https://github.com/sebharskamp/SyntaxParser",
   "entries": {
     "SyntaxParser Benchmark": [
@@ -108,6 +108,42 @@ window.BENCHMARK_DATA = {
             "value": 204710.3173828125,
             "unit": "ns",
             "range": "± 639.7738383964963"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "committer": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "distinct": true,
+          "id": "f209b2fedbd42f1cf27b5a1e8d5533b0d7703075",
+          "message": "Added static netlify website",
+          "timestamp": "2022-10-18T15:54:55+02:00",
+          "tree_id": "9dbe4a014a483c36215effbe13d834cf7a3ead26",
+          "url": "https://github.com/sebharskamp/SyntaxParser/commit/f209b2fedbd42f1cf27b5a1e8d5533b0d7703075"
+        },
+        "date": 1666101508993,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-small\")",
+            "value": 837.4248886108398,
+            "unit": "ns",
+            "range": "± 1.5889217280926748"
+          },
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-large\")",
+            "value": 249859.3036358173,
+            "unit": "ns",
+            "range": "± 516.555466253208"
           }
         ]
       }

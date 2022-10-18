@@ -1,0 +1,13 @@
+name: Trigger netlify webhook
+
+on: [push]
+jobs:
+  test-curl-action:
+    name: "Trigger netlify webhook"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Call API"
+        uses: indiesdev/curl@v1.1
+        with:
+          url: curl -X POST -d {} https://api.netlify.com/build_hooks/634eb254ef472379045c2ef7
+          method: "POST"

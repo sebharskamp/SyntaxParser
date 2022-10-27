@@ -6,10 +6,10 @@ namespace SyntaxParser.Core
     /// Provide the delimiter separating the input values. 
     /// <see href="https://syntaxparser.netlify.app/?id=singledelimiterattribute">For an example</see>
     /// </summary>
-    public class SingleDelimterSyntaxAttribute : Attribute
+    public class SingleDelimiterSyntaxAttribute : Attribute
     {
         private readonly string _delimiter;
-        public SingleDelimterSyntaxAttribute(string delimiter)
+        public SingleDelimiterSyntaxAttribute(string delimiter)
         {
             _delimiter = delimiter;
         }

@@ -117,7 +117,7 @@ namespace SyntaxParser
 
             var attributes = type.GetCustomAttributes().ToArray();
             var syntax = ((SyntaxAttribute?)attributes.FirstOrDefault(a => a.GetType() == typeof(SyntaxAttribute)));
-            var delimiterSyntax = ((SingleDelimterSyntaxAttribute?)attributes.FirstOrDefault(a => a.GetType() == typeof(SingleDelimterSyntaxAttribute)));
+            var delimiterSyntax = ((SingleDelimiterSyntaxAttribute?)attributes.FirstOrDefault(a => a.GetType() == typeof(SingleDelimiterSyntaxAttribute)));
             string? value = null;
             if (syntax?.Value is not null)
             {

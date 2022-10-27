@@ -2,7 +2,7 @@
 
 namespace SyntaxParser.Tests.Shared
 {
-    [SingleDelimterSyntax(";")]
+    [SingleDelimiterSyntax(";")]
     public class CsvSyntax
     {
         public string Name { get; set; }

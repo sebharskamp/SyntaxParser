@@ -46,9 +46,9 @@ var result = SyntaxParser.ParseTextToJson<Example>("Rome=>Paris");
 ```
 
 ### SingleDelimiterAttribute
-Decorate a class with the SyntaxAttribute.
+Decorate a class with the SingleDelimiterSyntax.
 ```csharp
-[SingleDelimterSyntax(";")]
+[SingleDelimiterSyntax(";")]
 public class CsvExample
 {
     public string Name { get; set; }

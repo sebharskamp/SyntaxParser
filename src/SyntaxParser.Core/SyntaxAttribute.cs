@@ -1,6 +1,10 @@
 ﻿namespace SyntaxParser
 {
-    public class SyntaxAttribute : Attribute
+	/// <summary>
+	/// Define your input syntax. 
+	/// <see href="https://syntaxparser.netlify.app/?id=syntaxattribute">For an example</see>
+	/// </summary>
+	public class SyntaxAttribute : Attribute
 	{
 		private readonly string _syntax;
 

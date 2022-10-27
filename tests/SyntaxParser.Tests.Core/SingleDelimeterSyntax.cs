@@ -59,7 +59,7 @@ namespace SyntaxParser.Tests.Core
             {
                 Input = new CsvSyntaxCaseInput
                 {
-                    Content = "John Doe;39;24-03-2022" + Environment.NewLine + "Cloe Doe;38;2022-03-24T00:00:00",
+                    Content = "John Doe;39;2022-03-24T00:00:00" + Environment.NewLine + "Cloe Doe;38;2022-03-24T00:00:00",
                     Delimiter = ";"
                 },
                 Expected = new CsvSyntax[]

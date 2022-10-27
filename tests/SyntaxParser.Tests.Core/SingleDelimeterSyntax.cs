@@ -59,7 +59,7 @@ namespace SyntaxParser.Tests.Core
             {
                 Input = new CsvSyntaxCaseInput
                 {
-                    Content = "John Doe;39;24-03-2022" + Environment.NewLine + "Cloe Doe;38;16-03-2022",
+                    Content = "John Doe;39;24-03-2022" + Environment.NewLine + "Cloe Doe;38;2022-03-24T00:00:00",
                     Delimiter = ";"
                 },
                 Expected = new CsvSyntax[]
@@ -68,13 +68,13 @@ namespace SyntaxParser.Tests.Core
                     {
                         Name = "John Doe",
                         Age = 39,
-                        SubscriptionDate = DateTime.Parse("24-03-2022")
+                        SubscriptionDate = DateTime.Parse("2022-03-24T00:00:00")
                     },
                     new CsvSyntax
                     {
                         Name = "Cloe Doe",
                         Age = 38,
-                        SubscriptionDate = DateTime.Parse("16-03-2022")
+                        SubscriptionDate = DateTime.Parse("2022-03-24T00:00:00")
                     }
                 }
             }

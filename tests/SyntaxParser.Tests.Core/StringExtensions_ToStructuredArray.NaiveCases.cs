@@ -1,8 +1,8 @@
-﻿using SyntaxParser.Tests.Unit.UseCaseFramework;
+﻿using SyntaxParser.Tests.Shared.UseCaseFramework;
 using System;
 using System.Collections.Generic;
 
-namespace SyntaxParser.Tests.Unit
+namespace SyntaxParser.Tests.Core
 {
     public partial class StringExtensions_ToStructuredArray
     {
@@ -13,7 +13,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<string>
                 {
-                    Input = new Input
+                    Input = new ToStructuredArrayInput
                     {
                         Text = "hello=>world",
                         Parameters = new(){
@@ -27,7 +27,7 @@ namespace SyntaxParser.Tests.Unit
                 },
                 new NaiveCase<string>
                 {
-                    Input = new Input
+                    Input = new ToStructuredArrayInput
                     {
                         Text = $"A=>B{Environment.NewLine}C=>D",
                         Parameters = new(){
@@ -40,7 +40,7 @@ namespace SyntaxParser.Tests.Unit
                 },
                 new NaiveCase<string>
                 {
-                    Input = new Input
+                    Input = new ToStructuredArrayInput
                     {
                         Text = "[ping, pong]=>[pong, ping]",
                         Parameters = new(){
@@ -54,7 +54,7 @@ namespace SyntaxParser.Tests.Unit
                 },
                 new NaiveCase<string>
                 {
-                    Input = new Input
+                    Input = new ToStructuredArrayInput
                     {
                         Text = "hop+step=>jump",
                         Parameters = new(){
@@ -68,7 +68,7 @@ namespace SyntaxParser.Tests.Unit
                 },
                 new NaiveCase<string>
                 {
-                    Input =  new Input
+                    Input =  new ToStructuredArrayInput
                     {
                         Text = "[0,1]",
                         Parameters = new(){
@@ -89,7 +89,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<char>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "a+b=>c",
                         Parameters = new(){
@@ -109,7 +109,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<short>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "1+0=>10",
                         Parameters = new(){
@@ -129,7 +129,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<ushort>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "1+0=>10",
                         Parameters = new(){
@@ -149,7 +149,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<int>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "1+0=>10",
                         Parameters = new(){
@@ -162,7 +162,7 @@ namespace SyntaxParser.Tests.Unit
                 },
                 new NaiveCase<int>
                 {
-                    Input =  new Input
+                    Input =  new ToStructuredArrayInput
                         { Text = "[0,1]",
                         Parameters = new(){
                     DelimeterSequence = new[] { "," },
@@ -182,7 +182,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<uint>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "1+0=>10",
                         Parameters = new(){
@@ -202,7 +202,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<long>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "1+0=>10",
                         Parameters = new(){
@@ -222,7 +222,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<ulong>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "1+0=>10",
                         Parameters = new() {
@@ -242,7 +242,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<double>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "1+0.2=>10.1",
                         Parameters = new(){
@@ -255,7 +255,7 @@ namespace SyntaxParser.Tests.Unit
                 },
                 new NaiveCase<double>
                 {
-                    Input =  new Input
+                    Input =  new ToStructuredArrayInput
                     {
                         Text = "[0.2,1.0]",
                         Parameters = new()
@@ -277,7 +277,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<bool>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "False+True=>True",
                         Parameters = new(){
@@ -297,7 +297,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<byte>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "0+127=>255",
                         Parameters = new(){
@@ -317,7 +317,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<sbyte>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "-128+127=>-1",
                         Parameters = new(){
@@ -337,7 +337,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<float>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = "-128+127=>-1",
                         Parameters = new(){
@@ -358,7 +358,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<decimal>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                     {
                         Text = $"{decimal.MinValue}+{decimal.MaxValue}=>{decimal.Zero}",
                         Parameters = new(){
@@ -379,7 +379,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new NaiveCase<DateTime>
                 {
-                   Input = new Input
+                   Input = new ToStructuredArrayInput
                    {
                         Text = "20080501T08:30:52Z<=19990501T08:30:52Z=>20220101T00:00:00Z",
                         Parameters = new(){

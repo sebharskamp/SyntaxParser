@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Reflection;
+using System.Text.Json;
 
-namespace SyntaxParser.Tests.Unit.Extensions
+namespace SyntaxParser.Tests.Shared.Extensions
 {
-    public static class ExtensionMethods
+    public static class ReflectionExtension
     {
         public static async Task<object> InvokeAsync(this MethodInfo @this, object obj, params object[] parameters)
         {
@@ -13,7 +14,6 @@ namespace SyntaxParser.Tests.Unit.Extensions
             return resultProperty.GetValue(task);
         }
     }
-
 }
 
 

@@ -1,15 +1,15 @@
 ﻿using SyntaxParser.Tests.Shared;
 using System.Collections.Generic;
 using System;
-using SyntaxParser.Tests.Unit.UseCaseFramework;
+using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Unit
+namespace SyntaxParser.Tests.Core
 {
     public partial class SyntaxParser_AllApiCalls
     {
         public class MoveSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
         {
-            protected override List<SyntaxParserCase> UseCases => new List<SyntaxParserCase>
+            protected override List<SyntaxParserCase> UseCases => new()
             {
                 new SyntaxParserCase
                 {

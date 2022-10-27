@@ -3,7 +3,8 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-[assembly: InternalsVisibleTo("SyntaxParser.Tests.Unit")]
+[assembly: InternalsVisibleTo("SyntaxParser.Tests.Shared")]
+[assembly: InternalsVisibleTo("SyntaxParser.Tests.Core")]
 namespace SyntaxParser
 {
     internal static class StringExtensions

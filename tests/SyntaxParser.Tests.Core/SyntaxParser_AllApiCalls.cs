@@ -1,17 +1,13 @@
 ﻿using SyntaxParser.Tests.Shared;
-using System.Collections;
 using System.Collections.Generic;
 using Xunit;
-using FluentAssertions;
 using System.Threading.Tasks;
 using System.Text.Json;
-using SyntaxParser.Core.Extensions;
-using System.IO;
-using SyntaxParser.Tests.Unit.UseCaseFramework;
-using SyntaxParser.Tests.Unit.Extensions;
-using System;
+using SyntaxParser.Tests.Core;
+using SyntaxParser.Tests.Shared.Util;
+using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Unit
+namespace SyntaxParser.Tests.Core
 {
     public partial class SyntaxParser_AllApiCalls
     {
@@ -107,17 +103,12 @@ namespace SyntaxParser.Tests.Unit
             var result = await @case.InvokeMethodAsync(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJsonAsync), new object[] { file.Path });
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
         }
+    }
 
-        public class Input
-        {
-            public string Text { get; init; }
-        }
-
-        public class SyntaxParserCase : DynamicExpectedTypeUseCase<string>
-        {
-            public override Dynamic Expected { get; set; }
-            public override string Input { get; set; }
-        }
+    public class SyntaxParserCase : DynamicExpectedTypeUseCase<string>
+    {
+        public override Dynamic Expected { get; set; }
+        public override string Input { get; set; }
     }
 
 }

@@ -1,11 +1,12 @@
 ﻿# SyntaxParser
-For those whom want to parse business understandable, and easy to read commands in to an C# instance.
+For those whom want to parse business understandable, and easy to read commands or delimiter separated documents, e.g. CSV's, in to an C# instance.
 
 Not intended to replace JSON or other data structures for external oriented production software. 
 Use it to speed up project Initialization, produce data and workflow in harmony with the business.
 
 
 ## Usage
+### SyntaxAttribute
 Decorate a class with the SyntaxAttribute.
 ```csharp
 [Syntax($"{nameof(From)}=>{nameof(To)}")]
@@ -21,7 +22,7 @@ Parse file or text to instances.
 ```csharp
 var result = SyntaxParser.ParseText<Example>("Rome=>Paris");
 
-// result will be an array with the following instances.
+// result will be an array, Example[], with the following instances.
 //[
 // { 
 //    "From" : "Rome",
@@ -35,11 +36,52 @@ Parse file or text to json.
 ```csharp
 var result = SyntaxParser.ParseTextToJson<Example>("Rome=>Paris");
 
-// result will be an array with the following instances.
+// result will be a json array with the following instances.
 //[
 // { 
 //    "From" : "Rome",
 //    "To" : "Paris"
+// }
+//]
+```
+
+### SingleDelimiterAttribute
+Decorate a class with the SyntaxAttribute.
+```csharp
+[SingleDelimterSyntax(";")]
+public class CsvExample
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public DateTime SubscriptionDate { get; set; }
+}
+```
+
+Parse file or text to instances.
+```csharp
+var result = SyntaxParser.ParseText<CsvExample>("John Doe;42;24-03-2022");
+
+// result will be an array, CsvExample[], with the following instances.
+//[
+// { 
+//    "Name" : "John Doe",
+//    "Age" : 42,
+//    "SubscriptionDate" : {24-3-2022 00:00:00}
+// }
+//]
+```
+
+
+Parse file or text to json.
+```csharp
+var result = SyntaxParser.ParseTextToJson<CsvExample>("John Doe;42;24-03-2022");
+
+// result will be a json array with the following instances.
+//[
+// {
+//    "Name":"John Doe",
+//    "Age": 42,
+//    "SubscriptionDate" : "2022-03-24T00:00:00"
 // }
 //]
 ```
@@ -80,4 +122,3 @@ For all methods two tests are run. One small with 4 instructions and one Large w
 
 ## TODO
 - Nested Support
-- CSV Support

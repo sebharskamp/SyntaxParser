@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Text.Json;
 using FluentAssertions;
 using FluentAssertions.Equivalency;
-using Newtonsoft.Json;
 using Xunit.Abstractions;
 
-namespace SyntaxParser.Tests.Unit.UseCaseFramework
+namespace SyntaxParser.Tests.Shared.UseCaseFramework
 {
     public interface IUseCase : IXunitSerializable
     {
@@ -16,10 +14,10 @@ namespace SyntaxParser.Tests.Unit.UseCaseFramework
         public Dynamic(object value)
         {
             Value = value;
-            Type = value.GetType();
+            Type = value.GetType().FullName;
         }
 
-        public Type Type { get; set; }
+        public string Type { get; set; }
         public object Value { get; set; }
     }
 
@@ -48,14 +46,14 @@ namespace SyntaxParser.Tests.Unit.UseCaseFramework
 
         public void Deserialize(IXunitSerializationInfo info)
         {
-            Input = JsonConvert.DeserializeObject<TInput>(info.GetValue<string>(nameof(Input)));
-            Expected = JsonConvert.DeserializeObject<TExpected>(info.GetValue<string>(nameof(Expected)));
+            Input = JsonSerializer.Deserialize<TInput>(info.GetValue<string>(nameof(Input)));
+            Expected = JsonSerializer.Deserialize<TExpected>(info.GetValue<string>(nameof(Expected)));
         }
 
         public void Serialize(IXunitSerializationInfo info)
         {
-            info.AddValue(nameof(Input), JsonConvert.SerializeObject(Input));
-            info.AddValue(nameof(Expected), JsonConvert.SerializeObject(Expected));
+            info.AddValue(nameof(Input), JsonSerializer.Serialize(Input));
+            info.AddValue(nameof(Expected), JsonSerializer.Serialize(Expected));
         }
 
 

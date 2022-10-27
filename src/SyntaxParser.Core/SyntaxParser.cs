@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using SyntaxParser.Core;
+using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
@@ -54,9 +55,13 @@ namespace SyntaxParser
             using var sr = new StreamReader(path); ;
             while (sr.Peek() >= 0)
             {
-                foreach (var result in GetParser<T>()(await sr.ReadLineAsync()))
+                var line = await sr.ReadLineAsync();
+                if (!string.IsNullOrEmpty(line))
                 {
-                    yield return result;
+                    foreach (var result in GetParser<T>()(line))
+                    {
+                        yield return result;
+                    }
                 }
             }
         }
@@ -108,12 +113,29 @@ namespace SyntaxParser
 
         private static (Delegate, string[]) CreateParser(Type type)
         {
-            var syntax = ((SyntaxAttribute?)type.GetCustomAttributes().FirstOrDefault(a => a.GetType() == typeof(SyntaxAttribute)));
-            if (syntax?.Value is null) throw new InvalidOperationException();
+            string[]? syntaxDelimiter = null;
 
-            var syntaxDelimiter = ConstantRegex.SyntaxDelimiter.Matches(syntax.Value).Select(m => m.Value).ToArray();
+            var attributes = type.GetCustomAttributes().ToArray();
+            var syntax = ((SyntaxAttribute?)attributes.FirstOrDefault(a => a.GetType() == typeof(SyntaxAttribute)));
+            var delimiterSyntax = ((SingleDelimterSyntaxAttribute?)attributes.FirstOrDefault(a => a.GetType() == typeof(SingleDelimterSyntaxAttribute)));
+            string? value = null;
+            if (syntax?.Value is not null)
+            {
+                syntaxDelimiter = ConstantRegex.SyntaxDelimiter.Matches(syntax.Value).Select(m => m.Value).ToArray();
+                value = syntax?.Value;
+            }
+            else if (delimiterSyntax is not null)
+            {
+                syntaxDelimiter = Enumerable.Repeat(delimiterSyntax.Value, type.GetProperties().Length - 1).ToArray();
+                value = string.Join(delimiterSyntax.Value, type.GetProperties().Select(p => p.Name));
+            }
+            else
+            {
+                syntaxDelimiter = new string[0];
+                value = type.GetProperties().FirstOrDefault(p => p.PropertyType == typeof(string))?.Name ?? throw new InvalidOperationException();
+            }
 
-            var activator = BuildCreateInstanceFunction(type, syntax.Value.ToStructuredArray<string>(syntaxDelimiter, 0, 0, _sequenceAlgorithm)).Compile();
+            var activator = BuildCreateInstanceFunction(type, value.ToStructuredArray<string>(syntaxDelimiter, 0, 0, _sequenceAlgorithm)).Compile();
             return (activator, syntaxDelimiter);
         }
 

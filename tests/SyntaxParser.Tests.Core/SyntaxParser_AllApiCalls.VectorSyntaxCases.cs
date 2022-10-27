@@ -1,9 +1,8 @@
 using SyntaxParser.Tests.Shared;
 using System.Collections.Generic;
-using static SyntaxParser.Tests.Unit.SyntaxParser_AllApiCalls;
-using SyntaxParser.Tests.Unit.UseCaseFramework;
+using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Unit
+namespace SyntaxParser.Tests.Core
 {
     public class VectorSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
     {

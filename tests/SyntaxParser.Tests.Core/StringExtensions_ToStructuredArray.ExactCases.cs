@@ -6,9 +6,9 @@ using SyntaxParser;
 using System.Collections.Generic;
 using System.Collections;
 using SyntaxParser.Tests.Shared;
-using SyntaxParser.Tests.Unit.UseCaseFramework;
+using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Unit
+namespace SyntaxParser.Tests.Core
 {
     public partial class StringExtensions_ToStructuredArray
     {
@@ -20,7 +20,7 @@ namespace SyntaxParser.Tests.Unit
             {
                 new ExactCase
                 {
-                    Input = new Input
+                    Input = new ToStructuredArrayInput
                     {
                         Text = "what=>if=>else",
                         Parameters = new(){
@@ -34,7 +34,7 @@ namespace SyntaxParser.Tests.Unit
                 },
                 new ExactCase
                 {
-                    Input = new Input
+                    Input = new ToStructuredArrayInput
                     {
                         Text = $"what=>if=>else{Environment.NewLine}it=>has=>newLine",
                         Parameters = new(){

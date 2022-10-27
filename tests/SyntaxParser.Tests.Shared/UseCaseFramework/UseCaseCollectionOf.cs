@@ -1,11 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections;
-using Xunit.Abstractions;
-using Newtonsoft.Json;
+﻿using System.Collections;
 
-namespace SyntaxParser.Tests.Unit.UseCaseFramework
+namespace SyntaxParser.Tests.Shared.UseCaseFramework
 {
     public abstract class UseCaseCollectionOf<T> : IEnumerable<T[]>
     {

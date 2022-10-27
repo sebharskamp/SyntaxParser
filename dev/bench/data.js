@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1666882322432,
+  "lastUpdate": 1666886874624,
   "repoUrl": "https://github.com/sebharskamp/SyntaxParser",
   "entries": {
     "SyntaxParser Benchmark": [
@@ -396,6 +396,42 @@ window.BENCHMARK_DATA = {
             "value": 249853.18684895834,
             "unit": "ns",
             "range": "± 607.270084693375"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "committer": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "distinct": true,
+          "id": "d57dc2f8902878b7be61bfdd15db8f41c24f5c14",
+          "message": "Date fix in tests and added summary to attributes",
+          "timestamp": "2022-10-27T18:04:28+02:00",
+          "tree_id": "ddac4ad6b9753c42d2c593c4a6aee39cd1fde2b7",
+          "url": "https://github.com/sebharskamp/SyntaxParser/commit/d57dc2f8902878b7be61bfdd15db8f41c24f5c14"
+        },
+        "date": 1666886866230,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-small\")",
+            "value": 837.8293164571127,
+            "unit": "ns",
+            "range": "± 1.6393208166037538"
+          },
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-large\")",
+            "value": 251427.01171875,
+            "unit": "ns",
+            "range": "± 737.063030028083"
           }
         ]
       }

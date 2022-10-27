@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1666879980394,
+  "lastUpdate": 1666881734722,
   "repoUrl": "https://github.com/sebharskamp/SyntaxParser",
   "entries": {
     "SyntaxParser Benchmark": [
@@ -324,6 +324,42 @@ window.BENCHMARK_DATA = {
             "value": 250086.62434895834,
             "unit": "ns",
             "range": "± 637.5197748025419"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "committer": {
+            "email": "seb.harskamp@gmail.com",
+            "name": "sebharskamp",
+            "username": "sebharskamp"
+          },
+          "distinct": true,
+          "id": "6fcdfcd7c371e5574eec9ace842ea95757c8c4ed",
+          "message": "Changed datetime format input in tests",
+          "timestamp": "2022-10-27T16:34:19+02:00",
+          "tree_id": "fd0840505f7a2c6a9bc31ed3cf96f4af512c3efe",
+          "url": "https://github.com/sebharskamp/SyntaxParser/commit/6fcdfcd7c371e5574eec9ace842ea95757c8c4ed"
+        },
+        "date": 1666881720445,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-small\")",
+            "value": 699.6545855204264,
+            "unit": "ns",
+            "range": "± 1.4292871833231016"
+          },
+          {
+            "name": "Benchmark.Benchmarks.ParseText(FilePath: \"./instructions-large\")",
+            "value": 203354.33430989584,
+            "unit": "ns",
+            "range": "± 326.0849654486554"
           }
         ]
       }

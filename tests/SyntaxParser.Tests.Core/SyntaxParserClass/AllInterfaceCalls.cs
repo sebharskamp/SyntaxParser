@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using Xunit;
 using System.Threading.Tasks;
 using System.Text.Json;
-using SyntaxParser.Tests.Core;
 using SyntaxParser.Tests.Shared.Util;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Core
+namespace SyntaxParser.Tests.Core.SyntaxParserClass
 {
-    public partial class SyntaxParser_AllApiCalls
+    public partial class AllInterfaceCalls
     {
 
         [Theory]

@@ -1,8 +1,21 @@
 ﻿namespace SyntaxParser
 {
-    internal class SequenceAlgorithm
+    public enum SequenceAlgorithm
     {
-        internal const int Naive = 0;
-        internal const int Exact = 1;
+        Naive,
+        Exact
+    }
+
+
+    public static class SequenceAlgorithmExtensions
+    {
+        public static SequenceAlgorithm ToEnumOrDefault(this string? value) 
+        { 
+            if(!Enum.TryParse<SequenceAlgorithm>(value, false, out var result))
+            {
+                return SequenceAlgorithm.Naive;
+            }
+            return result;
+        }
     }
 }

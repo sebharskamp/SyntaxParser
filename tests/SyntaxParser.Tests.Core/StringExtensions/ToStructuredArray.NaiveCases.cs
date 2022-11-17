@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace SyntaxParser.Tests.Core
+namespace SyntaxParser.Tests.Core.StringExtensions
 {
-    public partial class StringExtensions_ToStructuredArray
+    public partial class ToStructuredArray
     {
         public class NaiveCase<T> : ToStructuredArrayTestCase<T> { }
         public class StringArrayNaiveCases : UseCaseCollectionOf<NaiveCase<string>>
@@ -18,7 +18,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "hello=>world",
                         Parameters = new(){
                             DelimeterSequence = new[] { "=>" },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 0,
                             FinalIndex = 0
                         }
@@ -32,7 +32,7 @@ namespace SyntaxParser.Tests.Core
                         Text = $"A=>B{Environment.NewLine}C=>D",
                         Parameters = new(){
                             DelimeterSequence = new[] { "=>" },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 0,
                             FinalIndex = 0}
                         },
@@ -45,7 +45,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "[ping, pong]=>[pong, ping]",
                         Parameters = new(){
                             DelimeterSequence = new[] { "=>" },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 0,
                             FinalIndex = 0
                         }
@@ -59,7 +59,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "hop+step=>jump",
                         Parameters = new(){
                             DelimeterSequence = new[] { "+", "=>" },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 0,
                             FinalIndex = 0
                         }
@@ -73,7 +73,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "[0,1]",
                         Parameters = new(){
                             DelimeterSequence = new[] { "," },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 1,
                             FinalIndex = 1
                         }
@@ -94,7 +94,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "a+b=>c",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -114,7 +114,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "1+0=>10",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -134,7 +134,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "1+0=>10",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -154,7 +154,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "1+0=>10",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -166,7 +166,7 @@ namespace SyntaxParser.Tests.Core
                         { Text = "[0,1]",
                         Parameters = new(){
                     DelimeterSequence = new[] { "," },
-                    sequenceAlgorithm = SequenceAlgorithm.Naive,
+                    sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                     StartIndex = 1,
                     FinalIndex = 1
                         }
@@ -187,7 +187,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "1+0=>10",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -207,7 +207,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "1+0=>10",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -227,7 +227,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "1+0=>10",
                         Parameters = new() {
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -247,7 +247,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "1+0.2=>10.1",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -261,7 +261,7 @@ namespace SyntaxParser.Tests.Core
                         Parameters = new()
                         {
                             DelimeterSequence = new[] { "," },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 1,
                             FinalIndex = 1
                         }
@@ -282,7 +282,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "False+True=>True",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -302,7 +302,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "0+127=>255",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -322,7 +322,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "-128+127=>-1",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0 }
                    },
@@ -342,7 +342,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "-128+127=>-1",
                         Parameters = new(){
                         DelimeterSequence = new[] { "+", "=>" },
-                        sequenceAlgorithm = SequenceAlgorithm.Naive,
+                        sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                         StartIndex = 0,
                         FinalIndex = 0
                        }
@@ -363,7 +363,7 @@ namespace SyntaxParser.Tests.Core
                         Text = $"{decimal.MinValue}+{decimal.MaxValue}=>{decimal.Zero}",
                         Parameters = new(){
                             DelimeterSequence = new[] { "+", "=>" },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 0,
                             FinalIndex = 0
                         }
@@ -384,7 +384,7 @@ namespace SyntaxParser.Tests.Core
                         Text = "20080501T08:30:52Z<=19990501T08:30:52Z=>20220101T00:00:00Z",
                         Parameters = new(){
                             DelimeterSequence = new[] { "<=", "=>" },
-                            sequenceAlgorithm = SequenceAlgorithm.Naive,
+                            sequenceAlgorithm = SequenceAlgorithm.Naive.ToString(),
                             StartIndex = 0,
                             FinalIndex = 0
                            }

@@ -2,7 +2,7 @@ using SyntaxParser.Tests.Shared;
 using System.Collections.Generic;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Core
+namespace SyntaxParser.Tests.Core.SyntaxParserClass
 {
     public class VectorSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
     {

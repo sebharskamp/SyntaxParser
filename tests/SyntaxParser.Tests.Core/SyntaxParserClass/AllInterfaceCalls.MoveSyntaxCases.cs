@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Core
+namespace SyntaxParser.Tests.Core.SyntaxParserClass
 {
-    public partial class SyntaxParser_AllApiCalls
+    public partial class AllInterfaceCalls
     {
         public class MoveSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
         {

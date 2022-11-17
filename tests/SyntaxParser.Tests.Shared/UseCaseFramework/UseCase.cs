@@ -43,7 +43,6 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
             }
         }
 
-
         public void Deserialize(IXunitSerializationInfo info)
         {
             Input = JsonSerializer.Deserialize<TInput>(info.GetValue<string>(nameof(Input)));

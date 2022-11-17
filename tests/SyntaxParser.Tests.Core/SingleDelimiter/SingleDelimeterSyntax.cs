@@ -1,19 +1,18 @@
 ﻿using SyntaxParser.Tests.Shared;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 using SyntaxParser.Tests.Shared.Util;
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SyntaxParser.Tests.Core
+namespace SyntaxParser.Tests.Core.SingleDelimiter
 {
-    public class SingleDelimeterSyntax
+    public partial class CsvSyntaxCases
     {
         [Theory]
         [ClassData(typeof(CsvSyntaxCases))]
-        public async Task ParseText_CsvSyntax(CsvSyntaxCase @case)
+        public async Task ParseText(CsvSyntaxCase @case)
         {
             var result = SyntaxParser.ParseText<CsvSyntax>(@case.Input.Content);
             @case.IsResultAsExpected(result);
@@ -21,7 +20,7 @@ namespace SyntaxParser.Tests.Core
 
         [Theory]
         [ClassData(typeof(CsvSyntaxCases))]
-        public async Task ParseFile_CsvSyntax(CsvSyntaxCase @case)
+        public async Task ParseFile(CsvSyntaxCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input.Content);
             var result = SyntaxParser.ParseFile<CsvSyntax>(file.Path);
@@ -51,47 +50,11 @@ namespace SyntaxParser.Tests.Core
         }
     }
 
-    public class CsvSyntaxCases : UseCaseCollectionOf<CsvSyntaxCase>
-    {
-        protected override List<CsvSyntaxCase> UseCases => new()
-        {
-            new CsvSyntaxCase
-            {
-                Input = new CsvSyntaxCaseInput
-                {
-                    Content = "John Doe;39;2022-03-24T00:00:00" + Environment.NewLine + "Cloe Doe;38;2022-03-24T00:00:00",
-                    Delimiter = ";"
-                },
-                Expected = new CsvSyntax[]
-                {
-                    new CsvSyntax
-                    {
-                        Name = "John Doe",
-                        Age = 39,
-                        SubscriptionDate = DateTime.Parse("2022-03-24T00:00:00")
-                    },
-                    new CsvSyntax
-                    {
-                        Name = "Cloe Doe",
-                        Age = 38,
-                        SubscriptionDate = DateTime.Parse("2022-03-24T00:00:00")
-                    }
-                }
-            }
-        };
-    }
-
-    public class CsvSyntaxCaseInput
-    {
-        public string Delimiter { get; set; }
-        public string Content { get; set; }
-    }
-        
 
 
-    public class CsvSyntaxCase : UseCase<CsvSyntaxCaseInput, CsvSyntax[]>
+    public class CsvSyntaxCase : UseCase<SingleDelimiterSyntaxCaseInput, CsvSyntax[]>
     {
-        public override CsvSyntaxCaseInput Input { get; set; }
+        public override SingleDelimiterSyntaxCaseInput Input { get; set; }
         public override CsvSyntax[] Expected { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 using System.Collections.Generic;
 
-namespace SyntaxParser.Tests.Core
+namespace SyntaxParser.Tests.Core.SyntaxParserClass
 {
     public class AdressSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
     {

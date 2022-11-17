@@ -9,28 +9,40 @@ namespace SyntaxParser
 {
     internal static class StringExtensions
     {
-        internal static T[] ToStructuredArray<T>(this string text, string[] delimterSequence, int start = 0, int end = 0, int sequenceAlgorithm = SequenceAlgorithm.Naive)
+        internal static T[] ToStructuredArray<T>(this string text, string[] delimterSequence, SequenceOptions sequenceOptions, int start = 0, int end = 0)
         {
             Type toType = typeof(T);
             int d = 0;
             ReadOnlySpan<char> input = text.AsSpan().Slice(start, text.Length - start - end);
             ReadOnlySpan<char> delim = delimterSequence[d].AsSpan();
             ReadOnlySpan<char> newLine = Environment.NewLine.AsSpan();
-
+            int delimitersPerLine = delimterSequence.Length;
             int amountOfNewLines = 0;
             input.AmountOfOccurences(newLine, ref amountOfNewLines);
             T[] results;
 
-            if (sequenceAlgorithm == SequenceAlgorithm.Exact)
+            if (sequenceOptions.PropertyCount.HasValue)
+            {
+                results = new T[sequenceOptions.PropertyCount.Value * (amountOfNewLines + 1)];
+                if(delimterSequence.Length >= sequenceOptions.PropertyCount.Value) 
+                {
+                    delimitersPerLine = sequenceOptions.PropertyCount.Value - 1;
+                }
+            } 
+            else if (sequenceOptions.SequenceAlgorithm == SequenceAlgorithm.Exact && !sequenceOptions.PropertyCount.HasValue)
             {
                 var delimGroup = delimterSequence.GroupBy(v => v).ToDictionary(v => v.Key, v => v.Count());
-                int delimCount = 0;
-                for (int i = 0; i < delimGroup.Keys.Count; i++)
+                foreach (var line in input.EnumerateLines())
                 {
-                    input.AmountOfOccurences(delim, ref delimCount);
+                    int delimLineCount = 0;
+                    line.AmountOfOccurences(delim, ref delimLineCount);
+                    if (delimLineCount > delimitersPerLine)
+                    {
+                        delimitersPerLine = delimLineCount;
+                    }
                 }
+                results = new T[(delimitersPerLine + 1) * (amountOfNewLines + 1)];
 
-                results = new T[delimCount + 1 + amountOfNewLines];
             }
             else
             {
@@ -40,21 +52,34 @@ namespace SyntaxParser
             int rCount = 0;
             int segmentSize = 0;
             int inputMinusNewline = input.Length - newLine.Length;
+            int delimEncounter = 0;
             for (int x = 0; x < input.Length; x++)
             {
                 if (x < inputMinusNewline && input.Slice(x, newLine.Length).SequenceEqual(newLine))
                 {
-                    results[rCount] = ValueParser(input.Slice(x - segmentSize, segmentSize), toType);
+                    if (delimEncounter <= delimitersPerLine)
+                    {
+                        results[rCount++] = ValueParser(input.Slice(x - segmentSize, segmentSize), toType);
+                        for (var i = delimEncounter; i < delimitersPerLine; i++)
+                        {
+                            rCount++;
+                        }
+                    }
+
                     x++;
                     d = 0;
                     delim = delimterSequence[d].AsSpan();
 
+                    delimEncounter = 0;
                     segmentSize = 0;
-                    rCount++;
                 }
                 else if (x < input.Length - delim.Length && input.Slice(x, delim.Length).SequenceEqual(delim))
                 {
-                    results[rCount] = ValueParser(input.Slice(x - segmentSize, segmentSize), toType);
+                    if (delimEncounter <= delimitersPerLine)
+                    {
+                        results[rCount++] = ValueParser(input.Slice(x - segmentSize, segmentSize), toType);
+                    }
+
                     x += delim.Length - 1;
                     d++;
                     if (d < delimterSequence.Length)
@@ -62,15 +87,37 @@ namespace SyntaxParser
                         delim = delimterSequence[d].AsSpan();
                     }
 
+                    delimEncounter++;
                     segmentSize = 0;
-                    rCount++;
                 }
                 else if (!(x == inputMinusNewline && input.Slice(x, newLine.Length).SequenceEqual(newLine)))
                 {
                     segmentSize++;
                 }
             }
-            results[rCount] = ValueParser(input.Slice(input.Length - segmentSize), toType);
+
+            ReadOnlySpan<char> lastSegment = input.Slice(input.Length - segmentSize);
+            var indexOfDelim = lastSegment.IndexOf(delim);
+            if(indexOfDelim >= 0)
+            {
+                lastSegment = lastSegment.Slice(0, indexOfDelim);
+                results[rCount++] = StringExtensions.ValueParser(lastSegment, toType);
+                var x = input.Length - segmentSize + lastSegment.Length;
+                for(var i = delimEncounter; i < delimitersPerLine; i++)
+                {
+               
+                    if (input.Slice(x).IndexOf(delim) >= 0)
+                    {
+                        results[rCount++] = StringExtensions.ValueParser(string.Empty, toType);
+                    }
+                    x += delim.Length;
+                }
+            }
+            else
+            {
+                results[rCount] = StringExtensions.ValueParser(lastSegment, toType);
+            }
+            
             return results;
         }
 
@@ -102,7 +149,7 @@ namespace SyntaxParser
         internal static void AmountOfOccurences(this ReadOnlySpan<char> text, ReadOnlySpan<char> charSet, ref int count)
         {
             int length = text.Length - charSet.Length;
-            for (var i = 0; i < length; i++)
+            for (var i = 0; i <= length; i++)
             {
                 if (text.Slice(i, charSet.Length).SequenceEqual(charSet))
                 {

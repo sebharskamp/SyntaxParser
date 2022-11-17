@@ -40,6 +40,14 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
             }
         }
 
+        public void IsResultAsInput(object producedResult, Func<TInput, string>? valueSelector = null)
+        {
+            if (typeof(TInput) == typeof(string))
+                valueSelector = input => input as string;
+
+            producedResult.Should().BeEquivalentTo(valueSelector(Input));
+        }
+
         public object? InvokeMethod(Type staticClassType, string methodName, object[] parameterValues)
         {
             var methodInfo = staticClassType.GetMethod(methodName, BindingFlags.Static | BindingFlags.Public);

@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace SyntaxParser.Tests.Core.SingleDelimiter
 {
-    public partial class SingleDelimiterSinglePropertySyntaxCases : UseCaseCollectionOf<SinglePropertySyntaxCase>
+    public partial class SingleDelimiterSyntaxCases 
     {
-        protected override List<SinglePropertySyntaxCase> UseCases => new()
+        public class SinglePropertyUseCases : UseCaseCollectionOf<SinglePropertyCase>
         {
-             new SinglePropertySyntaxCase
+            protected override List<SinglePropertyCase> UseCases => new()
+        {
+             new SinglePropertyCase
             {
                 Input = new SingleDelimiterSyntaxCaseInput
                 {
@@ -26,7 +28,7 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
                         Name = "John Doe"
                     }
                 }
-            }, new SinglePropertySyntaxCase
+            }, new SinglePropertyCase
             {
                 Input = new SingleDelimiterSyntaxCaseInput
                 {
@@ -45,7 +47,7 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
                     },
                 }
             },
-             new SinglePropertySyntaxCase
+             new SinglePropertyCase
             {
                 Input = new SingleDelimiterSyntaxCaseInput
                 {
@@ -64,7 +66,7 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
                     },
                 }
              },
-              new SinglePropertySyntaxCase
+              new SinglePropertyCase
             {
                 Input = new SingleDelimiterSyntaxCaseInput
                 {
@@ -84,5 +86,7 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
                 }
              }
         };
+        }
+       
     }
 }

@@ -23,6 +23,8 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
 
     public abstract class UseCase<TInput, TExpected> : IUseCase
     {
+        public abstract Type Contract { get; }
+        public string Description { get; set; }
         public abstract TInput Input { get; set; }
         public abstract TExpected Expected { get; set; }
 
@@ -55,6 +57,9 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
             info.AddValue(nameof(Expected), JsonSerializer.Serialize(Expected));
         }
 
-
+        public override string ToString()
+        {
+            return string.Format("[{0}] {1} => {2}", Contract.Name, JsonSerializer.Serialize(Input), JsonSerializer.Serialize(Expected));
+        }
     }
 }

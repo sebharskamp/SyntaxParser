@@ -8,7 +8,7 @@ using System.Collections;
 using SyntaxParser.Tests.Shared;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Core.StringExtensions
+namespace SyntaxParser.Tests.Core.StringExtensionsTests
 {
     public partial class ToStructuredArray
     {
@@ -16,7 +16,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
         public class ExactCase : ToStructuredArrayTestCase<string> { }
         public class StringArrayExactCases : UseCaseCollectionOf<ExactCase>
         {
-            protected override List<ExactCase> UseCases => new List<ExactCase>
+            protected override List<ExactCase> UseCases => new()
             {
                 new ExactCase
                 {

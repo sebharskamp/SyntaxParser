@@ -5,6 +5,7 @@ using System.Text;
 
 [assembly: InternalsVisibleTo("SyntaxParser.Tests.Shared")]
 [assembly: InternalsVisibleTo("SyntaxParser.Tests.Core")]
+[assembly: InternalsVisibleTo("SyntaxParser.Tests.Core.StringExtensions")]
 namespace SyntaxParser
 {
     internal static class StringExtensions

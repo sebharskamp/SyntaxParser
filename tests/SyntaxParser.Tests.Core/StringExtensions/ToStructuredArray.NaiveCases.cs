@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SyntaxParser.Tests.Core.StringExtensions
+namespace SyntaxParser.Tests.Core.StringExtensionsTests
 {
     public partial class ToStructuredArray
     {
@@ -105,7 +105,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class Int16ArrayNaiveCases : UseCaseCollectionOf<NaiveCase<short>>
         {
-            protected override List<NaiveCase<short>> UseCases => new List<NaiveCase<short>>
+            protected override List<NaiveCase<short>> UseCases => new()
             {
                 new NaiveCase<short>
                 {
@@ -125,7 +125,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class UInt16ArrayNaiveCases : UseCaseCollectionOf<NaiveCase<ushort>>
         {
-            protected override List<NaiveCase<ushort>> UseCases => new List<NaiveCase<ushort>>
+            protected override List<NaiveCase<ushort>> UseCases => new()
             {
                 new NaiveCase<ushort>
                 {
@@ -145,7 +145,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class Int32ArrayNaiveCases : UseCaseCollectionOf<NaiveCase<int>>
         {
-            protected override List<NaiveCase<int>> UseCases => new List<NaiveCase<int>>
+            protected override List<NaiveCase<int>> UseCases => new()
             {
                 new NaiveCase<int>
                 {
@@ -178,7 +178,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class UInt32ArrayNaiveCases : UseCaseCollectionOf<NaiveCase<uint>>
         {
-            protected override List<NaiveCase<uint>> UseCases => new List<NaiveCase<uint>>
+            protected override List<NaiveCase<uint>> UseCases => new()
             {
                 new NaiveCase<uint>
                 {
@@ -218,7 +218,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class UInt64ArrayNaiveCases : UseCaseCollectionOf<NaiveCase<ulong>>
         {
-            protected override List<NaiveCase<ulong>> UseCases => new List<NaiveCase<ulong>>
+            protected override List<NaiveCase<ulong>> UseCases => new()
             {
                 new NaiveCase<ulong>
                 {
@@ -238,7 +238,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class DoubleArrayNaiveCases : UseCaseCollectionOf<NaiveCase<double>>
         {
-            protected override List<NaiveCase<double>> UseCases => new List<NaiveCase<double>>
+            protected override List<NaiveCase<double>> UseCases => new()
             {
                 new NaiveCase<double>
                 {
@@ -273,7 +273,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class ToStructuredBoolArrayNaiveCases : UseCaseCollectionOf<NaiveCase<bool>>
         {
-            protected override List<NaiveCase<bool>> UseCases => new List<NaiveCase<bool>>
+            protected override List<NaiveCase<bool>> UseCases => new()
             {
                 new NaiveCase<bool>
                 {
@@ -293,7 +293,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class ByteArrayNaiveCases : UseCaseCollectionOf<NaiveCase<byte>>
         {
-            protected override List<NaiveCase<byte>> UseCases => new List<NaiveCase<byte>>
+            protected override List<NaiveCase<byte>> UseCases => new()
             {
                 new NaiveCase<byte>
                 {
@@ -313,7 +313,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class SByteArrayNaiveCases : UseCaseCollectionOf<NaiveCase<sbyte>>
         {
-            protected override List<NaiveCase<sbyte>> UseCases => new List<NaiveCase<sbyte>>
+            protected override List<NaiveCase<sbyte>> UseCases => new()
             {
                 new NaiveCase<sbyte>
                 {
@@ -333,7 +333,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class SingleArrayNaiveCases : UseCaseCollectionOf<NaiveCase<float>>
         {
-            protected override List<NaiveCase<float>> UseCases => new List<NaiveCase<float>>
+            protected override List<NaiveCase<float>> UseCases => new()
             {
                 new NaiveCase<float>
                 {
@@ -354,7 +354,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class DecimalArrayNaiveCases : UseCaseCollectionOf<NaiveCase<decimal>>
         {
-            protected override List<NaiveCase<decimal>> UseCases => new List<NaiveCase<decimal>>
+            protected override List<NaiveCase<decimal>> UseCases => new()
             {
                 new NaiveCase<decimal>
                 {
@@ -375,7 +375,7 @@ namespace SyntaxParser.Tests.Core.StringExtensions
 
         public class DateTimeArrayNaiveCases : UseCaseCollectionOf<NaiveCase<DateTime>>
         {
-            protected override List<NaiveCase<DateTime>> UseCases => new List<NaiveCase<DateTime>>
+            protected override List<NaiveCase<DateTime>> UseCases => new()
             {
                 new NaiveCase<DateTime>
                 {

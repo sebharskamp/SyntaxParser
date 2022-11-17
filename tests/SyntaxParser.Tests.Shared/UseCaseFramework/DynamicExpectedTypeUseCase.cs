@@ -13,6 +13,7 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
 {
     public abstract class DynamicExpectedTypeUseCase<TInput> : IUseCase
     {
+        public abstract Type Contract { get; }
         public abstract TInput Input { get; set; }
         public abstract Dynamic Expected { get; set; }
 
@@ -95,6 +96,11 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
         {
             info.AddValue(nameof(Input), JsonSerializer.Serialize(Input));
             info.AddValue(nameof(Expected), JsonSerializer.Serialize(Expected));
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[{0}|{1}] {2} => {3}", Contract.Name, Type.GetType(Expected.Type).Name, JsonSerializer.Serialize(Input), JsonSerializer.Serialize(Expected.Value));
         }
     }
 }

@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 namespace SyntaxParser.Tests.Core.SyntaxParserClass
 {
-    public class AdressSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
+    public partial class AllInterfaceCalls
     {
-        protected override List<SyntaxParserCase> UseCases => new()
+        public class AdressSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
+        {
+            protected override List<SyntaxParserCase> UseCases => new()
         {
                 new SyntaxParserCase
                 {
@@ -21,7 +23,9 @@ namespace SyntaxParser.Tests.Core.SyntaxParserClass
                         })
                 }
             };
+        }
     }
+
 }
 
 

@@ -4,9 +4,11 @@ using SyntaxParser.Tests.Shared.UseCaseFramework;
 
 namespace SyntaxParser.Tests.Core.SyntaxParserClass
 {
-    public class VectorSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
+    public partial class AllInterfaceCalls
     {
-        protected override List<SyntaxParserCase> UseCases => new List<SyntaxParserCase>
+        public class VectorSyntaxCases : UseCaseCollectionOf<SyntaxParserCase>
+        {
+            protected override List<SyntaxParserCase> UseCases => new()
             {
                 new SyntaxParserCase
                 {
@@ -20,6 +22,7 @@ namespace SyntaxParser.Tests.Core.SyntaxParserClass
                         })
                 }
             };
+        }
     }
 }
 

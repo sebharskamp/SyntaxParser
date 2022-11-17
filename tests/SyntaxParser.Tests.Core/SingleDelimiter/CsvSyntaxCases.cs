@@ -1,6 +1,8 @@
-﻿using SyntaxParser.Tests.Shared;
+﻿using SyntaxParser.Core;
+using SyntaxParser.Tests.Shared;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 using SyntaxParser.Tests.Shared.Util;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -48,13 +50,19 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
             var result = SyntaxParser.ParseFileToJson<CsvSyntax>(file.Path);
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
         }
-    }
 
+        public class SingleDelimiterSyntaxCaseInput
+        {
+            public string Delimiter { get; set; }
+            public string Content { get; set; }
+        }
 
+        public class CsvSyntaxCase : UseCase<SingleDelimiterSyntaxCaseInput, CsvSyntax[]>
+        {
+            public override SingleDelimiterSyntaxCaseInput Input { get; set; }
+            public override CsvSyntax[] Expected { get; set; }
 
-    public class CsvSyntaxCase : UseCase<SingleDelimiterSyntaxCaseInput, CsvSyntax[]>
-    {
-        public override SingleDelimiterSyntaxCaseInput Input { get; set; }
-        public override CsvSyntax[] Expected { get; set; }
+            public override Type Contract => typeof(SyntaxParser);
+        }
     }
 }

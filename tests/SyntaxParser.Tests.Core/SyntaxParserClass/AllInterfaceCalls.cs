@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using SyntaxParser.Tests.Shared.Util;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
+using System;
 
 namespace SyntaxParser.Tests.Core.SyntaxParserClass
 {
@@ -102,12 +103,15 @@ namespace SyntaxParser.Tests.Core.SyntaxParserClass
             var result = await @case.InvokeMethodAsync(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJsonAsync), new object[] { file.Path });
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
         }
-    }
 
-    public class SyntaxParserCase : DynamicExpectedTypeUseCase<string>
-    {
-        public override Dynamic Expected { get; set; }
-        public override string Input { get; set; }
+        public class SyntaxParserCase : DynamicExpectedTypeUseCase<string>
+        {
+            public override Dynamic Expected { get; set; }
+            public override string Input { get; set; }
+
+            public override Type Contract => typeof(SyntaxParser);
+
+        }
     }
 
 }

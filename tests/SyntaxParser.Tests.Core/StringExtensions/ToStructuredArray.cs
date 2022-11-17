@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 using FluentAssertions.Equivalency;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 
-namespace SyntaxParser.Tests.Core.StringExtensions
+namespace SyntaxParser.Tests.Core.StringExtensionsTests
 {
     public partial class ToStructuredArray
     {
@@ -210,28 +210,28 @@ namespace SyntaxParser.Tests.Core.StringExtensions
             var structeredArray = input.Text.ToStructuredArray<DateTime>(input.Parameters.DelimeterSequence, sequenceOptions, input.Parameters.StartIndex, input.Parameters.FinalIndex);
             @case.IsResultAsExpected(structeredArray);
         }
+
+        public class ToStructuredArrayInput
+        {
+            public string Text { get; init; }
+            public MethodParameters Parameters { get; init; }
+
+        }
+
+        public class MethodParameters
+        {
+            public string[] DelimeterSequence { get; init; }
+            public int StartIndex { get; init; }
+            public int FinalIndex { get; init; }
+            public string sequenceAlgorithm { get; init; }
+        }
+
+        public class ToStructuredArrayTestCase<T> : UseCase<ToStructuredArrayInput, T[]>
+        {
+            public override T[] Expected { get; set; }
+            public override ToStructuredArrayInput Input { get; set; }
+
+            public override Type Contract => typeof(StringExtensions);
+        }
     }
-
-    public class ToStructuredArrayInput
-    {
-        public string Text { get; init; }
-        public MethodParameters Parameters { get; init; }
-
-    }
-
-    public class MethodParameters
-    {
-        public string[] DelimeterSequence { get; init; }
-        public int StartIndex { get; init; }
-        public int FinalIndex { get; init; }
-        public string sequenceAlgorithm { get; init; }
-    }
-
-    public class ToStructuredArrayTestCase<T> : UseCase<ToStructuredArrayInput, T[]>
-    {
-        public override T[] Expected { get; set; }
-        public override ToStructuredArrayInput Input { get; set; }
-    }
-
-
 }

@@ -1,4 +1,5 @@
-﻿using SyntaxParser.Tests.Shared;
+﻿using SyntaxParser.Core;
+using SyntaxParser.Tests.Shared;
 using SyntaxParser.Tests.Shared.UseCaseFramework;
 using SyntaxParser.Tests.Shared.Util;
 using System;
@@ -9,19 +10,19 @@ using Xunit;
 
 namespace SyntaxParser.Tests.Core.SingleDelimiter
 {
-    public partial class SingleDelimiterSinglePropertySyntaxCases
+    public partial class SingleDelimiterSyntaxCases
     {
         [Theory]
-        [ClassData(typeof(SingleDelimiterSinglePropertySyntaxCases))]
-        public async Task ParseText(SinglePropertySyntaxCase @case)
+        [ClassData(typeof(SinglePropertyUseCases))]
+        public async Task ParseText(SinglePropertyCase @case)
         {
             var result = SyntaxParser.ParseText<SingleDelimiterSinglePropertySyntax>(@case.Input.Content);
             @case.IsResultAsExpected(result);
         }
 
         [Theory]
-        [ClassData(typeof(SingleDelimiterSinglePropertySyntaxCases))]
-        public async Task ParseFile(SinglePropertySyntaxCase @case)
+        [ClassData(typeof(SinglePropertyUseCases))]
+        public async Task ParseFile(SinglePropertyCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input.Content);
             var result = SyntaxParser.ParseFile<SingleDelimiterSinglePropertySyntax>(file.Path);
@@ -29,8 +30,8 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
         }
 
         [Theory]
-        [ClassData(typeof(SingleDelimiterSinglePropertySyntaxCases))]
-        public async Task ParseFileAsync_SingleDelimiterSinglePropertySyntax(SinglePropertySyntaxCase @case)
+        [ClassData(typeof(SinglePropertyUseCases))]
+        public async Task ParseFileAsync_SingleDelimiterSinglePropertySyntax(SinglePropertyCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input.Content);
             var result = new List<SingleDelimiterSinglePropertySyntax>();
@@ -42,12 +43,26 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
         }
 
         [Theory]
-        [ClassData(typeof(SingleDelimiterSinglePropertySyntaxCases))]
-        public async Task ParseFileToJson(SinglePropertySyntaxCase @case)
+        [ClassData(typeof(SinglePropertyUseCases))]
+        public async Task ParseFileToJson(SinglePropertyCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input.Content);
             var result = SyntaxParser.ParseFileToJson<SingleDelimiterSinglePropertySyntax>(file.Path);
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
+        }
+
+        public class SingleDelimiterSyntaxCaseInput
+        {
+            public string Delimiter { get; set; }
+            public string Content { get; set; }
+        }
+
+        public class SinglePropertyCase : UseCase<SingleDelimiterSyntaxCaseInput, SingleDelimiterSinglePropertySyntax[]>
+        {
+            public override SingleDelimiterSyntaxCaseInput Input { get; set; }
+            public override SingleDelimiterSinglePropertySyntax[] Expected { get; set; }
+
+            public override Type Contract => typeof(SyntaxParser);
         }
     }
 }

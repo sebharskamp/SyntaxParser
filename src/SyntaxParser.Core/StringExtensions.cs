@@ -43,7 +43,6 @@ namespace SyntaxParser
                     }
                 }
                 results = new T[(delimitersPerLine + 1) * (amountOfNewLines + 1)];
-
             }
             else
             {

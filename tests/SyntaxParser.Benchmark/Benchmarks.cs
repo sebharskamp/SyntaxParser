@@ -38,9 +38,6 @@ namespace Benchmark
             var result = JsonSerializer.Deserialize<MoveSyntax[]>(_jsonText);
         }
 
-
-
-
         public void ParseFile()
         {
             var result = SyntaxParser.SyntaxParser.ParseFile<MoveSyntax>($"{FilePath}.txt");
@@ -65,10 +62,7 @@ namespace Benchmark
             using var stream = new StreamReader($"{FilePath}.json");
             var result = await JsonSerializer.DeserializeAsync<MoveSyntax[]>(stream.BaseStream);
         }
-
-
-
-
+        
         public async Task ParseFileToJsonAsync()
         {
             var result = await SyntaxParser.SyntaxParser.ParseFileToJsonAsync<MoveSyntax>($"{FilePath}.txt");

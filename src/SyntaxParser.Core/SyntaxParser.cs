@@ -315,12 +315,10 @@ namespace SyntaxParser
         private static LambdaExpression BuildCreateInstanceFunction(Type type, string[] syntax)
         {
             var input = Expression.Parameter(typeof(string[]), "input");
-            var index = Expression.Variable(typeof(int), "index");
-            var valueAtIndex = Expression.Variable(typeof(string), "valueAtIndex");
+            Expression.Variable(typeof(int), "index");
+            Expression.Variable(typeof(string), "valueAtIndex");
 
-            var properties = type.GetProperties().Select(p => p.Name);
             var sliceLength = syntax.Length;
-            var orderproperties = new string[sliceLength];
             var shift = Expression.Variable(typeof(int), "shift");
 
             var propertyAssignments = new MemberAssignment[sliceLength];
@@ -347,8 +345,6 @@ namespace SyntaxParser
                     propertyAssignments[i] = Expression.Bind(member, parse);
                 }
             }
-
-            var initialization = Expression.Lambda(Expression.MemberInit(Expression.New(type), propertyAssignments), new[] { input, shift });
 
             var sliceSize = Expression.Variable(typeof(int), "sliceSize");
             var resultSize = Expression.Variable(typeof(int), "resultSize");

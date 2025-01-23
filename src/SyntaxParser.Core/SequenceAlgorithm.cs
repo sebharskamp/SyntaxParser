@@ -6,7 +6,6 @@
         Exact
     }
 
-
     public static class SequenceAlgorithmExtensions
     {
         public static SequenceAlgorithm ToEnumOrDefault(this string? value) 

@@ -51,7 +51,8 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
 
         public object? InvokeMethod(Type staticClassType, string methodName, object[] parameterValues)
         {
-            var methodInfo = staticClassType.GetMethod(methodName, BindingFlags.Static | BindingFlags.Public);
+            var methods = staticClassType.GetMethods(BindingFlags.Static | BindingFlags.Public);
+            var methodInfo = methods.FirstOrDefault(x => x.Name.Equals(methodName) && x.GetParameters().Length == parameterValues.Length);
             var type = Type.GetType(Expected.Type);
             var genericArguments = new Type[] { type.GetElementType() ?? type };
             var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
@@ -60,7 +61,8 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
 
         public object? InvokeMethod<T>(T instance, string methodName, object[] parameterValues)
         {
-            var methodInfo = typeof(T).GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public);
+            var methods = typeof(T).GetMethods(BindingFlags.Instance | BindingFlags.Public);
+            var methodInfo = methods.FirstOrDefault(x => x.Name.Equals(methodName) && x.GetParameters().Length == parameterValues.Length);
             var type = Type.GetType(Expected.Type);
             var genericArguments = new Type[] { type.GetElementType() ?? type };
             var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
@@ -69,7 +71,8 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
 
         public async Task<object?> InvokeMethodAsync(Type staticClassType, string methodName, object[] parameterValues)
         {
-            var methodInfo = staticClassType.GetMethod(methodName, BindingFlags.Static | BindingFlags.Public);
+            var methods = staticClassType.GetMethods(BindingFlags.Static | BindingFlags.Public);
+            var methodInfo = methods.FirstOrDefault(x => x.Name.Equals(methodName) && x.GetParameters().Length == parameterValues.Length);
             var type = Type.GetType(Expected.Type);
             var genericArguments = new Type[] { type.GetElementType() ?? type };
             var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);
@@ -78,7 +81,8 @@ namespace SyntaxParser.Tests.Shared.UseCaseFramework
 
         public async Task<object?> InvokeMethodAsync<T>(T instance, string methodName, object[] parameterValues)
         {
-            var methodInfo = typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.Public);
+            var methods = typeof(T).GetMethods(BindingFlags.Instance | BindingFlags.Public);
+            var methodInfo = methods.FirstOrDefault(x => x.Name.Equals(methodName) && x.GetParameters().Length == parameterValues.Length);
             var type = Type.GetType(Expected.Type);
             var genericArguments = new Type[] { type.GetElementType() ?? type };
             var genericMethodInfo = methodInfo?.MakeGenericMethod(genericArguments);

@@ -89,7 +89,7 @@ namespace SyntaxParser.Tests.Core.SyntaxParserClass
         public async Task ParseFileToJson(SyntaxParserCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input);
-            var result = @case.InvokeMethod(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJson), new object[] { file.Path });
+            var result = @case.InvokeMethod(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJson), new object[] { file.Path, 0, 2});
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
         }
 
@@ -100,7 +100,7 @@ namespace SyntaxParser.Tests.Core.SyntaxParserClass
         public async Task ParseFileToJsonAsync(SyntaxParserCase @case)
         {
             using var file = await TemporaryFile.InitializeAsync(@case.Input);
-            var result = await @case.InvokeMethodAsync(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJsonAsync), new object[] { file.Path });
+            var result = await @case.InvokeMethodAsync(typeof(SyntaxParser), nameof(SyntaxParser.ParseFileToJsonAsync), new object[] { file.Path, 0, 2});
             @case.IsResultAsExpected(result, parse: expected => JsonSerializer.Serialize(expected));
         }
 

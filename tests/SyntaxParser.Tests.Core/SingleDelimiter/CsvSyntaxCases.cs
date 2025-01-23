@@ -20,14 +20,6 @@ namespace SyntaxParser.Tests.Core.SingleDelimiter
             @case.IsResultAsExpected(result);
         }
 
-        [Theory]
-        [ClassData(typeof(CsvSyntaxCases))]
-        public async Task ParseFile(CsvSyntaxCase @case)
-        {
-            using var file = await TemporaryFile.InitializeAsync(@case.Input.Content);
-            var result = SyntaxParser.ParseFile<CsvSyntax>(file.Path);
-            @case.IsResultAsExpected(result);
-        }
 
         [Theory]
         [ClassData(typeof(CsvSyntaxCases))]

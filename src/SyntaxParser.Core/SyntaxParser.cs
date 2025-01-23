@@ -31,7 +31,7 @@ namespace SyntaxParser
         /// <returns>serialized JSON object.</returns>
         public static string ParseTextToJson<T>(string text) where T : notnull
         {
-            return JsonSerializer.Serialize(SyntaxParser.ParseText<T>(text));
+            return JsonSerializer.Serialize(ParseText<T>(text));
         }
 
         /// <summary>
@@ -44,6 +44,79 @@ namespace SyntaxParser
             using var sr = new StreamReader(path);
             return GetParser<T>()(sr.ReadToEnd());
         }
+        
+        /// <summary>
+        /// Parse content of a file line by line to create the desired instances.
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        /// <param name="skip">The amount of lines to skip.</param>
+        /// <returns>Parsed instances.</returns>
+        public static IEnumerable<T> ParseFile<T>(string path, int skip) where T : notnull
+        {
+            using var sr = new StreamReader(path);
+            int lineNumber = -1;
+            while (sr.Peek() >= 0)
+            {
+                lineNumber++;
+                
+                if (lineNumber < skip)
+                { 
+                    sr.ReadLine();
+                    continue;
+                }
+                
+                var line = sr.ReadLine();
+        
+                if (!string.IsNullOrEmpty(line))
+                {
+                    foreach (var result in GetParser<T>()(line))
+                    {
+                        yield return result;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parse content of a file line by line to create the desired instances.
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        /// <param name="skip">The amount of lines to skip.</param>
+        /// <param name="take">The amount of lines to parse.</param>
+        /// <returns>Parsed instances.</returns>
+        public static IEnumerable<T> ParseFile<T>(string path, int skip, int take) where T : notnull
+        {
+            using var sr = new StreamReader(path);
+            var toLineNumber = skip + take;
+            var lineNumber = -1;
+            while (sr.Peek() >= 0)
+            {
+                lineNumber++;
+        
+                if (lineNumber == toLineNumber)
+                {
+                    break;
+                }
+                
+                if (lineNumber < skip)
+                { 
+                    sr.ReadLine();
+                    continue;
+                }
+
+                var line = sr.ReadLine();
+                
+                if (!string.IsNullOrEmpty(line))
+                {
+                    foreach (var result in GetParser<T>()(line))
+                    {
+                        yield return result;
+                    }
+                }
+            }
+        }
+        
+        
 
         /// <summary>
         /// Parse content of a file line by line to create the desired instances asyncronous.
@@ -66,28 +139,121 @@ namespace SyntaxParser
             }
         }
 
+
         /// <summary>
-        /// Parse content of a file line by line to serialized JSON object(s).
+        /// Parse content of a file line by line to create the desired instances asyncronous.
         /// </summary>
         /// <param name="path">Path to the file.</param>
-        /// <returns>serialized JSON object.</returns>
-        public static string ParseFileToJson<T>(string path) where T : notnull
+        /// <param name="skip">The amount of lines to skip.</param>
+        /// <returns>Parsed instances.</returns>
+        public static async IAsyncEnumerable<T> ParseFileAsync<T>(string path, int skip) where T : notnull
         {
-            return JsonSerializer.Serialize(SyntaxParser.ParseFile<T>(path));
+            using var sr = new StreamReader(path); ;
+            int lineNumber = -1;
+            while (sr.Peek() >= 0)
+            {
+                lineNumber++;
+                
+                if(lineNumber < skip)
+                { 
+                    await sr.ReadLineAsync();
+                    continue;
+                }
+                
+                var line = await sr.ReadLineAsync();
+                
+                if (!string.IsNullOrEmpty(line))
+                {
+                    foreach (var result in GetParser<T>()(line))
+                    {
+                        yield return result;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parse content of a file line by line to create the desired instances asyncronous.
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        /// <param name="skip">The amount of lines to skip.</param>
+        /// <param name="take">The amount of lines to parse.</param>
+        /// <returns>Parsed instances.</returns>
+        public static async IAsyncEnumerable<T> ParseFileAsync<T>(string path, int skip, int take) where T : notnull
+        {
+            using var sr = new StreamReader(path); ;
+            var toLineNumber = skip + take;
+            var lineNumber = -1;
+            while (sr.Peek() >= 0)
+            {
+                lineNumber++;
+                
+                if(lineNumber == toLineNumber)
+                {
+                    break;
+                }
+                
+                if(lineNumber < skip)
+                { 
+                    await sr.ReadLineAsync();
+                    continue;
+                }
+                
+                var line = await sr.ReadLineAsync();
+                
+                if (!string.IsNullOrEmpty(line))
+                {
+                    foreach (var result in GetParser<T>()(line))
+                    {
+                        yield return result;
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Parse content of a file line by line to serialized JSON object(s).
         /// </summary>
         /// <param name="path">Path to the file.</param>
+        /// <param name="skip">Lines to skip.</param>
+        /// <param name="take">Lines to take.</param>
         /// <returns>serialized JSON object.</returns>
-        public async static Task<string> ParseFileToJsonAsync<T>(string path) where T : notnull
+        public static string ParseFileToJson<T>(string path, int? skip = null, int? take = null) where T : notnull
+        {
+          return skip.HasValue switch
+            {
+                true when take.HasValue => JsonSerializer.Serialize(ParseFile<T>(path, skip.Value, take.Value)),
+                true => JsonSerializer.Serialize(ParseFile<T>(path, skip.Value)),
+                _ => JsonSerializer.Serialize(ParseFile<T>(path))
+            };
+        }
+
+        /// <summary>
+        /// Parse content of a file line by line to serialized JSON object(s).
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        /// <param name="skip">Lines to skip.</param>
+        /// <param name="take">Lines to take.</param>
+        /// <returns>serialized JSON object.</returns>
+        public static async Task<string> ParseFileToJsonAsync<T>(string path, int? skip = null, int? take = null) where T : notnull
         {
             using var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, SyntaxParser.ParseFileAsync<T>(path));
+
+            if (skip.HasValue && take.HasValue)
+            {   
+                await JsonSerializer.SerializeAsync(stream,  ParseFileAsync<T>(path, skip.Value, take.Value));
+            }
+            else if (skip.HasValue)
+            {
+                await JsonSerializer.SerializeAsync(stream, ParseFileAsync<T>(path, skip.Value));
+            }
+            else
+            {
+                await JsonSerializer.SerializeAsync(stream, ParseFileAsync<T>(path));
+            }
             using var reader = new StreamReader(stream);
             stream.Position = 0;
-            return reader.ReadToEnd();
+            return await reader.ReadToEndAsync();
         }
 
 
